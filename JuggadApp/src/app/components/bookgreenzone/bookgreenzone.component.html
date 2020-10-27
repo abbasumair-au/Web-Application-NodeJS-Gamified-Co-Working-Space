@@ -1,0 +1,77 @@
+<div class="row">
+    <div class="col-sm-12 offset-sm-3">
+        <h4 style="color: green; padding-left: 40px; padding-top: 20px;">Manage Your Booking</h4>
+    <div class="icalendar">
+        <div class="icalendar__month">
+            <div class="icalendar__prev" onclick="moveDate('prev')">
+                <span>&#10094;</span>
+            </div>
+            <div class="icalendar__current-date">
+                <h2 id="icalendarMonth"></h2>
+                <div>
+                    <div id="icalendarDateStr"></div>
+                </div>
+
+            </div>
+            <div class="icalendar__next" onclick="moveDate('next')">
+                <span>&#10095;</span>
+            </div>
+        </div>
+            <div class="icalendar__week-days">
+                <div>Sun</div>
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+            </div>
+        <div class="icalendar__days"></div>
+    </div>
+</div>
+</div>
+
+<div class="row" style="margin-top: 20px">
+    <div class="col-sm-6 offset-sm-3">
+      <div class="alert alert-success" role="alert">
+        <div class="card-body">
+          <h5 class="card-title" style="font-weight: bold;">6 Oct 2020</h5>
+        <label for="avg">Select Zone - Room + Avg Rate:</label>
+        <select class="form-control" id="avg">
+          <option>Zone1</option>
+          <option>Zone2</option>
+          <option>Zone3</option>
+          <option>Zone4</option>
+        </select>
+        <br>
+        <div class="row">
+        <div class="col-sm-6"> 
+          <div class="form-group pmd-textfield pmd-textfield-floating-label">
+            <label class="control-label" for="datepicker-start">Start Time</label>
+            <input type="time" id="appt" name="appt" min="06:00" max="00:00" required>
+          </div>
+        </div>
+        <div class="col-sm-6"> 
+          <div class="form-group pmd-textfield pmd-textfield-floating-label">
+            <label class="control-label" for="timepicker-end">End Time</label>
+            <input type="time" id="appt" name="appt" min="06:00" max="00:00" required>
+          </div>
+        </div>
+      </div><br><br>
+      <div class="row">
+        <div class="col-sm-12">
+          <h4 style="align-content: center"> 7 am to 11 am<br>4 Hrs</h4>
+        </div>
+      </div><br><br>
+
+      <div class="row">
+        <div class="col-sm-12">
+        <p style="float: left; font-weight: bold">GZ 23 Total : 4.8 Euro<img src="assets/green-env.jpg" class="img-fluid" alt="Responsive image" width="30px" height="10px" style="border-radius: 50%"></p>
+        <p style="float: right;"><a href="#" class="btn btn-success">Confirm</a></p>
+      </div>
+        
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
