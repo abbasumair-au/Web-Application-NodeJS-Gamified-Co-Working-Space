@@ -6,6 +6,8 @@ import { LoginComponent } from './components/login/login.component';
 import { BookgreenzoneComponent } from './components/bookgreenzone/bookgreenzone.component';
 import { ConfirmbookingComponent } from './components/confirmbooking/confirmbooking.component';
 import { HomeComponent } from './components/home/home.component';
+import { RegistrationComponent } from './components/registration/registration.component';
+
 
 const routes: Routes = [
   { path: '', 
@@ -34,6 +36,10 @@ const routes: Routes = [
   {
   path: 'home',
   component: HomeComponent
+  },
+  {
+  path: 'register',
+  component: RegistrationComponent
   }
 ];
 

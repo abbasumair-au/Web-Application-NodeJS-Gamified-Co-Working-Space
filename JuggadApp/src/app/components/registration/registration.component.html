@@ -1,1 +1,27 @@
-<p>registration works!</p>
+<div class="container">
+	<div class="login-form" style="width: 400px; height: 200px;">    
+	    <form action="" method="">
+			<div class="avatar"><img src="assets/juggad.jpeg" class="img-fluid" alt="Responsive image" ></div>
+	    	<h4 class="modal-title" style="color: green; font-weight: bold">Register Your Account</h4>
+	        <div class="form-group">
+	            <input type="text" [(ngModel)]="name" name="name" class="form-control" placeholder="Name" required="required">
+	        </div>
+          <div class="form-group">
+              <input type="text" [(ngModel)]="email" name="email" class="form-control" placeholder="Email" required="required">
+          </div>
+
+          <div class="form-group">
+              <input type="text" [(ngModel)]="mobile" name="mobile" class="form-control" placeholder="Phone Number" required="required">
+          </div>
+
+	        <div class="form-group">
+	            <input type="password" [(ngModel)]="password" name="password"class="form-control" placeholder="Password" required="required">
+			</div>
+			<label style="color: red;">{{errorMessage}}</label>
+          <div class="form-group">
+              <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" class="form-control" placeholder="Confirm Password" required="required">
+          </div> 
+	        <input type="submit" class="btn btn-primary btn-block btn-lg" (click) = "register()" value="Register">              
+	    </form>			
+	    
+	</div>

@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { CommonModule } from "@angular/common";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,6 +14,10 @@ import { BookgreenzoneComponent } from './components/bookgreenzone/bookgreenzone
 import { FormsModule } from '@angular/forms';
 import { ConfirmbookingComponent } from './components/confirmbooking/confirmbooking.component';
 import { HomeComponent } from './components/home/home.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { AdminComponent } from './components/admin/admin.component';
+//import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -22,15 +27,22 @@ import { HomeComponent } from './components/home/home.component';
     NotificationsComponent,
     RegistrationComponent,
     MessagingComponent,
-    BookgreenzoneComponent,
     ConfirmbookingComponent,
-    HomeComponent
+    HomeComponent,
+    BookgreenzoneComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    CommonModule,
+    //BrowserAnimationsModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]
