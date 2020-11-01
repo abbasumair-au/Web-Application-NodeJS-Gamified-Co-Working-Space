@@ -1,129 +1,79 @@
-<div class="container"></div>
+<div class="container">
   <div class="row">
     <div class="col-sm-12 offset-sm-3">
-        <!-- <h4 style="color: green; padding-left: 40px; padding-top: 20px;">Manage Your Booking</h4> -->
-    <div class="icalendar">
-        <div class="icalendar__month">
-            <div class="icalendar__prev" onclick="moveDate('prev')">
-                <span>&#10094;</span>
-            </div>
-            <div class="icalendar__current-date">
-                <h2 id="icalendarMonth"></h2>
-                <div>
-                    <div id="icalendarDateStr"></div>
-                </div>
-
-            </div>
-            <div class="icalendar__next" onclick="moveDate('next')">
-                <span>&#10095;</span>
-            </div>
-        </div>
-            <div class="icalendar__week-days">
-                <div>Sun</div>
-                <div>Mon</div>
-                <div>Tue</div>
-                <div>Wed</div>
-                <div>Thu</div>
-                <div>Fri</div>
-                <div>Sat</div>
-            </div>
-        <div class="icalendar__days"></div>
-      </div>
-  </div>
-  </div><br><br><br>
+      <!-- <h4 style="color: green; padding-left: 40px; padding-top: 20px;">Manage Your Booking</h4> -->
+      <p-calendar [(ngModel)]="bookingdate" [inline]="true" dateFormat="dd.mm.yy">
+        <ng-template pTemplate="date" let-date>
+          <span
+            [ngStyle]="{
+              backgroundColor: fillColor(date)
+            }"
+            style="
+              border-radius: 50%;
+              padding: 1em;
+              display: block;
+            "
+            >{{ date.day }}</span
+          >
+        </ng-template>
+      </p-calendar>
+    </div>
+  </div><br/>
   <div class="container">
-  <div class="row">
-    <div class="col-sm-2">
-    <h5 style="color: green"><b>Green Zone</b></h5>
-    </div>
-    <div class="col-sm-2">
-      <p style="align-items: center;"><button type="button" class="btn btn-success">G1</button></p>
-    <button type="button" class="btn btn-success w-100">6:00 AM-9:00 AM</button>
-    <p style="color: green; font-family: sans-serif; text-align: center;">6$/hr</p>
-    </div>
-    <div class="col-sm-2">
-      <p style="align-items: center;"><button type="button" class="btn btn-success">G2</button></p>
-    <button type="button" class="btn btn-warning w-100">9:00 AM-12:00 PM</button>
-    <p style="color: green; font-family: sans-serif; text-align: center;">7$/hr</p>
-    </div>
-    <div class="col-sm-2">
-      <p style="align-items: center;"><button type="button" class="btn btn-success">G3</button></p>
-    <button type="button" class="btn btn-danger w-100">2:00 PM-5:00 PM</button>
-    <p style="color: green; font-family: sans-serif; text-align: center;">8$/hr</p>
-    </div>
-    <div class="col-sm-2">
-      <p style="align-items: center;"><button type="button" class="btn btn-success">G4</button></p>
-    <button type="button" class="btn btn-success w-100">5:00 PM- 8: 00 PM</button>
-    <p style="color: green; font-family: sans-serif; text-align: center;">9$/hr</p>
-  </div>
-  </div><br><br><br><br><br>
-  </div>
-  <div class="container">
-  <div class="row">
-  <div class="col-sm-2">
-  <h5 style="color: green"><b>Regular  Zone</b></h5>
-  </div>
-  <div class="col-sm-2">
-  <p style="align-items: center;"><button type="button" class="btn btn-danger">R1</button></p>
-  <button type="button" class="btn btn-success w-100">6:00 AM-9:00 AM</button>
-  <p style="color: green; font-family: sans-serif; text-align: center;">10$/hr</p>
-  </div>
-  <div class="col-sm-2">
-  <p style="align-items: center;"><button type="button" class="btn btn-danger">R2</button></p>
-  <button type="button" class="btn btn-warning w-100">9:00 AM-12:00 PM</button>
-  <p style="color: green; font-family: sans-serif; text-align: center;">11$/hr</p>
-  </div>
-  <div class="col-sm-2">
-  <p style="align-items: center;"><button type="button" class="btn btn-danger">R3</button></p>
-  <button type="button" class="btn btn-danger w-100">2:00 PM-5:00 PM</button>
-  <p style="color: green; font-family: sans-serif; text-align: center;">12$/hr</p>
-  </div>
-  <div class="col-sm-2">
-  <p style="align-items: center;"><button type="button" class="btn btn-danger">R4</button></p>
-  <button type="button" class="btn btn-success w-100">5:00 PM- 8: 00 PM</button>
-  <p style="color: green; font-family: sans-serif; text-align: center;">10$/hr</p>
-  </div>
-  </div>
-  </div><br><br><br>
-  <div class="container">
-  <div class="alert alert-success" role="alert">
-  <div class="row">
-    <div class="col-sm-4">
-      <label for="zone">Select Zone</label>
-      <select ng-model="selectZone" class="mySelect">
-        <option value="select" disabled="true">--Select--</option>
-        <option *ngFor="let zone of zones">{{zone.RoomNo}}</option>
-      </select>
-      
-    </div>
-
-    <div class="col-sm-4">
-      <label for="time">Start Time</label><br>
-        <input type="time" id="appt" name="appt" min="06:00" max="00:00" required>
-      </div>
-
-      <div class="col-sm-4">
-      <label for="time">End Time</label><br>
-        <input type="time" id="appt" name="appt" min="06:00" max="00:00" required>
-      </div>
-      
-    </div><br><br><br>
-
     <div class="row">
-    <div class="col-sm-12">
-      <p style="align-items: center;"><b> Total Hours:</b></p>
+      <div class="col-sm-1">
+        <h5 style="color: green"><b>Green Zone</b></h5>
+      </div>
+      <div *ngFor = "let i of numberOfButtons" >
+        <button type="button" class="btn btn-success" (click) = "selectZoneTime('GZ', i)">{{i}}</button>
+      </div><br/><br /><br />
+      <div class="col-sm-1">
+        <h5 style="color: green"><b>Regular Zone</b></h5>
+      </div>
+      <div  *ngFor = "let i of numberOfButtons" >
+        <button type="button" class="btn btn-success" (click) = "selectZoneTime('RZ', i)">{{i}}</button>
+      </div>
     </div>
-  </div><br><br>
+  </div>
+<br /><br />
+  <div class="container">
+    <div class="alert alert-success" role="alert">
+      <div class="row">
+        <div class="col-sm-4">
+          <h3 style="font-weight: bold"
+            >Zone : {{ selectedZone }}</h3
+          >
+        </div>
 
-  <div class="row">
-    <div class="col-sm-12">
-    <p style="font-weight: bold; text-align: center;">Total Price :??? <img src="assets/green-env.jpg" class="img-fluid" alt="Responsive image" width="30px" height="10px" style="border-radius: 50%"></p>
-    <p style="text-align: center;"><a href="#" class="btn btn-success">Confirm</a></p>
-  </div>
-  </div>
+        <div class="col-sm-4">
+          <label for="time">Start Time: {{showStartTime}}</label><br />
+        </div>
+
+        <div class="col-sm-4">
+          <label for="time">End Time: {{showEndTime}}</label><br />
+        </div>
+      </div>
+      <br />
+
+      <div class="row">
+        <div class="col-sm-12">
+          <p style="text-align: center;">
+            <b> Total Hours: {{ txt_hours }}</b>
+          </p>
+        </div>
+      </div>
+      <br />
+
+      <div class="row">
+        <div class="col-sm-12">
+          <p style="font-weight: bold; text-align: center">
+            Total Price: {{ txt_totalPrice }}
+          </p>
+          <p style="text-align: center">
+            <button type="button" class="btn btn-success" (click) ="bookZone()">Confirm</button>
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-
-
-
-

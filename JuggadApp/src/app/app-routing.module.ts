@@ -7,6 +7,7 @@ import { BookgreenzoneComponent } from './components/bookgreenzone/bookgreenzone
 import { ConfirmbookingComponent } from './components/confirmbooking/confirmbooking.component';
 import { HomeComponent } from './components/home/home.component';
 import { RegistrationComponent } from './components/registration/registration.component';
+import { AdminComponent } from './components/admin/admin.component';
 
 
 const routes: Routes = [
@@ -40,6 +41,11 @@ const routes: Routes = [
   {
   path: 'register',
   component: RegistrationComponent
+  }
+  ,
+  {
+  path: 'admin',
+  component: AdminComponent
   }
 ];
 

@@ -1,3 +1,4 @@
+import { analyzeNgModules } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
@@ -12,6 +13,7 @@ export class LoginComponent implements OnInit {
   constructor(private loginservice:LoginService, public router: Router) { }
   username = "";
   password = "";
+  user: any;
   //page load
   ngOnInit(): void {
   
@@ -19,7 +21,8 @@ export class LoginComponent implements OnInit {
 
   public login(){
     this.loginservice.login(this.username, this.password).then((data) => {
-      console.log("received data :- "+data);
+      sessionStorage.setItem('userId', data['user'].recordset[0].userId);
+      sessionStorage.setItem('name', data['user'].recordset[0].name);
       this.router.navigate(['/home']);
     }).catch((err: any) => {
       console.log(err);

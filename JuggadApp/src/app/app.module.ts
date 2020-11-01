@@ -14,10 +14,10 @@ import { BookgreenzoneComponent } from './components/bookgreenzone/bookgreenzone
 import { FormsModule } from '@angular/forms';
 import { ConfirmbookingComponent } from './components/confirmbooking/confirmbooking.component';
 import { HomeComponent } from './components/home/home.component';
-import { CalendarModule, DateAdapter } from 'angular-calendar';
-import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { AdminComponent } from './components/admin/admin.component';
-//import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CalendarModule } from 'primeng/calendar';
+
 
 @NgModule({
   declarations: [
@@ -38,11 +38,8 @@ import { AdminComponent } from './components/admin/admin.component';
     HttpClientModule,
     FormsModule,
     CommonModule,
-    //BrowserAnimationsModule,
-    CalendarModule.forRoot({
-      provide: DateAdapter,
-      useFactory: adapterFactory,
-    }),
+    CalendarModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
