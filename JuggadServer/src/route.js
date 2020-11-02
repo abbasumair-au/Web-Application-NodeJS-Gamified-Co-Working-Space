@@ -55,6 +55,7 @@ module.exports = (app, mssql) => {
 
 
 
+
   app.post("/saveBooking", function (req, res) {
     
     console.log("inside savebooking route");
@@ -97,11 +98,11 @@ module.exports = (app, mssql) => {
 
 
   app.get("/getPricePerHourOfSelectedZone", function (req, res) {
-    let date = req.query.date;
-    let selectedZone = req.query.selectedZone;
-    let startTime = req.query.startTime;
-    let endTime = req.query.endTime;
-    console.log(date, selectedZone, startTime, endTime);
+    //let date = req.query.date;
+    //let selectedZone = req.query.selectedZone;
+    //let startTime = req.query.startTime;
+    //let endTime = req.query.endTime;
+    //console.log(date, selectedZone, startTime, endTime);
     res.json({ price: 7 }); 
   });
 
