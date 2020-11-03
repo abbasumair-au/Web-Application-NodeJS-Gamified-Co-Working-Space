@@ -2,11 +2,11 @@
   <div class="row">
     <div class="col-sm-12 offset-sm-3">
       <!-- <h4 style="color: green; padding-left: 40px; padding-top: 20px;">Manage Your Booking</h4> -->
-      <p-calendar [(ngModel)]="bookingdate" [inline]="true" dateFormat="dd.mm.yy">
+      <p-calendar [(ngModel)]="bookingdate" [inline]="true" (onMonthChange)="monthChange($event)">
         <ng-template pTemplate="date" let-date>
           <span
             [ngStyle]="{
-              backgroundColor: fillColor(date)
+              backgroundColor: findColor(date)
             }"
             style="
               border-radius: 50%;
@@ -24,14 +24,14 @@
       <div class="col-sm-1">
         <h5 style="color: green"><b>Green Zone</b></h5>
       </div>
-      <div *ngFor = "let i of numberOfButtons" >
-        <button type="button" class="btn btn-success" (click) = "selectZoneTime('GZ', i)">{{i}}</button>
+      <div *ngFor = "let i of hours" >
+        <button type="button" class="btn btn-success" [ngStyle]="{backgroundColor: findColor(i)}" (click) = "selectZoneTime('GZ', i)">{{i}}</button>
       </div><br/><br /><br />
       <div class="col-sm-1">
         <h5 style="color: green"><b>Regular Zone</b></h5>
       </div>
-      <div  *ngFor = "let i of numberOfButtons" >
-        <button type="button" class="btn btn-success" (click) = "selectZoneTime('RZ', i)">{{i}}</button>
+      <div  *ngFor = "let i of hours" >
+        <button type="button" class="btn btn-success" [ngStyle]="{backgroundColor: findColor(i)}" (click) = "selectZoneTime('RZ', i)">{{i}}</button>
       </div>
     </div>
   </div>

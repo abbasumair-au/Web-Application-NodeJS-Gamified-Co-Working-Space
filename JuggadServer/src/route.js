@@ -54,46 +54,61 @@ module.exports = (app, mssql) => {
   });
 
 
+  app.get("/getGZIds", function (req, res) {
 
+    let sql_greenZoneIds =
+      "SELECT z.ZID AS zoneId FROM tblZones z WHERE z.Zone = 'GZ';";
+
+    let callBackFunctionLogin = (err, greenZoneIds) => {
+      if (err) {
+        return res.json({ GZIds: greenZoneIds }).status(400);
+      }
+      res.json({ GZIds: greenZoneIds });
+    };
+    mssql.query(sql_greenZoneIds, callBackFunctionLogin);
+  });
+
+  app.get("/getRZIds", function (req, res) {
+
+    let sql_regZoneIds =
+      "SELECT z.ZID AS zoneId FROM tblZones z WHERE z.Zone = 'RZ';";
+
+    let callBackFunctionLogin = (err, regZoneIds) => {
+      if (err) {
+        return res.json({ RZIds: regZoneIds }).status(400);
+      }
+      res.json({ RZIds: regZoneIds });
+    };
+    mssql.query(sql_regZoneIds, callBackFunctionLogin);
+  });
 
   app.post("/saveBooking", function (req, res) {
     
     console.log("inside savebooking route");
    
-    let zid = "";
+    let zid = req.body.zoneId;
     let UID = req.body.UID;
-    let zoneName = req.body.zoneName;
-    let floor = 2;
     let date =req.body.date;
     let starttime = req.body.starttime;
     let endtime = req.body.endtime;
     let cost = req.body.cost;
+    let persons = 1;
     let action = "Act";
-    let bookingPoints = 20;
-
-    console.log(UID +" "+zoneName +" "+date+" "+starttime+" "+endtime+" "+cost+" "+action);
+    let bookingPoints = 10;
    
-    let sql_findZID = "SELECT TOP 1 ZID AS id FROM tblZones WHERE Zone = '" + zoneName+"' AND Floor = " +floor+";";
-    console.log("find zid query : "+sql_findZID);
-    let callBackFunctionfindZID = (err, zoneId) => {
+    let sql_nb ="INSERT INTO tblBookings (UID,ZID,Date,StartTime,EndTime,cost,Persons,ActOrMoved) VALUES ('" +UID +
+    "','" +zid +"','" +date +"','" +starttime+"','" +endtime+"','" +cost +"','" +persons +"','" +action +"')";
+
+    let NewBookingInsert = function (err, result) {
       if (err) throw err;
-      zid = zoneId.recordset[0].id;
-      console.log("ZID: "+zid);
-      let sql_nb ="INSERT INTO tblBookings (UID,ZID,Date,StartTime,EndTime,cost,ActOrMoved) VALUES ('" +UID +
-      "','" +zid +"','" +date +"','" +starttime+"','" +endtime+"','" +cost +"','" +action +"')";
-  
+      let sql_savePoints = "INSERT INTO tblCredits (UID, CrOrDb, Total, ForWhat, ReffID) VALUES('"+UID+"', '"+bookingPoints+"', (SELECT TOP 1 Total FROM tblCredits WHERE UID = '"+UID+"' ORDER BY CID DESC)+'"+bookingPoints+"', 'BID', 1)"
       let NewBookingInsert = function (err, result) {
         if (err) throw err;
-        let sql_savePoints = "INSERT INTO tblCredits (UID, CrOrDb, Total, ForWhat, ReffID) VALUES('"+UID+"', '"+bookingPoints+"', (SELECT TOP 1 Total FROM tblCredits WHERE UID = '"+UID+"' ORDER BY CID DESC)+'"+bookingPoints+"', 'BID', 1)"
-        let NewBookingInsert = function (err, result) {
-          if (err) throw err;
-          res.json({UId: UID,ZId: zid,date: date,starttime: starttime,endtime: endtime,cost: cost});
-          };
-        mssql.query(sql_savePoints, NewBookingInsert);
-      };
-      mssql.query(sql_nb, NewBookingInsert);
+        res.json({UId: UID,ZId: zid,date: date,starttime: starttime,endtime: endtime,cost: cost});
+        };
+      mssql.query(sql_savePoints, NewBookingInsert);
     };
-    mssql.query(sql_findZID, callBackFunctionfindZID);
+    mssql.query(sql_nb, NewBookingInsert);
   });
 
 
@@ -117,6 +132,50 @@ module.exports = (app, mssql) => {
     };
     mssql.query(sql_trefels, CurrentTrefels);
 });
+
+
+app.get("/getPriceOfTheDay", function (req, res) {
+  let date  = req.query.date; // to be used when we call alg
+  let sql_DatPriceCallBack ="select sum((EndTime-StartTime)*Persons) AS occ from tblbookings where date like '"+date+"';";
+  let price;
+  let DatOccupancyCallBack = function (err, occupancy) {
+    if(occupancy && occupancy.recordset[0].occ !== null){
+      occupancyPercentage = (occupancy.recordset[0].occ/360)*100; // to be used when we call alg
+
+      //Python Alg CALL
+      price = 8
+    }else{
+      price = 0
+    }
+    res.json({ price: price }); //need to be removed when api comes
+
+  };
+  mssql.query(sql_DatPriceCallBack, DatOccupancyCallBack);
+});
+
+app.get("/getPriceOfTheHour", function (req, res) {
+  let date  = req.query.date; // to be used when we call alg
+  let startTime  = req.query.startTime;
+  console.log(date+":"+startTime);
+
+  let sql_DatPriceCallBack ="select sum((EndTime-StartTime)*Persons) AS occ from tblbookings where date like '"+date+"' and starttime = '"+startTime+"';";
+  console.log(sql_DatPriceCallBack);
+  let DatOccupancyCallBack = function (err, occupancy) {
+    if(occupancy && occupancy.recordset[0].occ !== null){
+      occupancyPercentage = (occupancy.recordset[0].occ/360)*100; // to be used when we call alg
+      console.log(occupancyPercentage);
+
+      //Same python call, but with two inputs: date and strttime
+      price = 3
+    }else{
+      price = 0
+    }
+    res.json({ price: price }); //need to be removed when api comes
+
+  };
+  mssql.query(sql_DatPriceCallBack, DatOccupancyCallBack);
+});
+
 
 
 /*
