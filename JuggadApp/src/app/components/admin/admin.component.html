@@ -1,308 +1,154 @@
-<!-- javascript link -->
+<div class="container">
+  <div class="row">
+    <span class="badge badge-success" style="font-size: 18px; width: 800px;">Change Pricing-Model Tunning</span>
+  </div><br>
 
-<div class="wrapper">
-    <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-      <!-- Left navbar links -->
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-          <a href="index.html" class="nav-link">Home</a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-          <a href="#" class="nav-link">Contact</a>
-        </li>
-      </ul>
-  
-      <!-- SEARCH FORM -->
-      <form class="form-inline ml-3">
-        <div class="input-group input-group-sm">
-          <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-navbar" type="submit">
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
-        </div>
-      </form>
-    </nav>
-    <!-- /.navbar -->
-  
-    <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
-      <!-- Brand Logo -->
-      <a href="index3.html" class="brand-link">
-        <span class="brand-text font-weight-light"><b><label color="lightgreen">Juggad Admin Dashboard</label></b></span>
-      </a>
-  
-      <div class="sidebar">
-        <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-          <div class="image">
-            <img src="dist/img/juggad.jpeg" class="img-circle elevation-2" alt="User Image">
-          </div>
-          <div class="info">
-            <a href="#" class="d-block"><label color="lightgreen">Member of Team Juggad</label></a>
-          </div>
-        </div>
-  
-        <!-- Sidebar Menu -->
-        <nav class="mt-2">
-          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <!-- Add icons to the links using the .nav-icon class
-                 with font-awesome or any other icon font library -->
-           
-            <li class="nav-item has-treeview">
-              <a href="" class="nav-link">
-                <p>
-                  Occupancy Status
-                </p>
-              </a>
-            </li>
-  
-  
-             <li class="nav-item has-treeview">
-              <a href="#barchart" class="nav-link">
-                <p>
-                  Savings on Electricity
-                </p>
-              </a>
-            </li>
-  
-            <li class="nav-item has-treeview">
-              <a href="#config-pricing" class="nav-link">
-                <p>
-                  Config Pricing Models
-                </p>
-              </a>
-            </li>
-            </ul>
-        </nav>
-        <!-- /.sidebar-menu -->
-      </div>
-      <!-- /.sidebar -->
-    </aside>
-  
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
-      <div class="content-header">
-        <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-sm-6">
-              <h1 class="m-0 text-dark">Dashboard</h1>
-            </div><!-- /.col -->
-          </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-      </div>
-      <!-- /.content-header -->
-  
-      <!-- Main content -->
-      <section class="content">
-        <div class="container-fluid">
-          <!-- Small boxes (Stat box) -->
-          <div class="row">
-            <div class="col-lg-3 col-6">
-              <!-- small box -->
-              <div class="small-box bg-info">
-                <div class="inner">
-                  <p>Occupancy Status</p>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-              <!-- small box -->
-              <div class="small-box bg-success">
-                <div class="inner">
-                  <p>Savings on Electricity</p>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-              <!-- small box -->
-              <div class="small-box bg-danger">
-                <div class="inner">
-                  <p>Config Pricing Model</p>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            </div><br><br>
-          <!-- /.row -->
-          <!-- Main row -->
-  
-  <!-- Bar chart starts here -->
-  
-      <!-- Main content -->
-        <div id ="barchart" class="tab" style="display: none; margin-left: 120px;">
-          <div class="row">
-            <div class="col-md-10">
-              <!-- Bar Chart -->
-              <div class="card card-success">
-                <div class="card-header">
-                  <h3 class="card-title">Monthly Electricity Savings</h3>
-  
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove"></button>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <div class="chart">
-                    <canvas id="barChart" style="min-height: 250px; height: 350px; max-height: 250px; max-width: 100%;"></canvas>
-                  </div>
-                </div>
-                <!-- /.card-body -->
-              </div>
-              <!-- /.card -->
-            </div>
-            <!-- /.col (RIGHT) -->
-          </div>
-          <!-- /.row --><br><br>
-  
-          <div class="row">
-            <div class="col-md-10">
-              <!-- Bar Chart -->
-              <div class="card card-success">
-                <div class="card-header">
-                  <h3 class="card-title">Weekly Electricity Savings</h3>
-  
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove"></button>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <div class="chart">
-                    <canvas id="barChart1" style="min-height: 250px; height: 350px; max-height: 250px; max-width: 100%;"></canvas>
-                  </div>
-                </div>
-                <!-- /.card-body -->
-              </div>
-              <!-- /.card -->
-            </div>
-            <!-- /.col (RIGHT) -->
-          </div>
-        </div><!-- /.container-fluid -->
-  <!-- bar charts end here -->
-  
-  <!-- config pricing model starts -->
-  <div id="config-pricing" class="tab" style="display: none;">
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
-      <section class="content-header">
-        <div class="container-fluid">
-        </div><!-- /.container-fluid -->
-      </section>
-  
-      <!-- Main content -->
+  <div class="row" style="border: 3px solid black; width: 800px;">
+    <div class="col-sm-3" style="margin-top: 16%">
+      <h5><span class="badge badge-success" style="font-size: 24px">Green Hour</span></h5>
+    </div>
+    <div class="col-sm-9">
+      <table class="table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Increase</th>
+            <th>Decrease</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Morning</td>
+            <td><button type="button" class="btn btn-success">+</button></td>
+            <td><button type="button" class="btn btn-danger">-</button></td>
+          </tr>
+
+          <tr>
+            <td>Afternoon</td>
+            <td><button type="button" class="btn btn-success">+</button></td>
+            <td><button type="button" class="btn btn-danger">-</button></td>
+          </tr>
+
+          <tr>
+            <td>Evening</td>
+            <td><button type="button" class="btn btn-success">+</button></td>
+            <td><button type="button" class="btn btn-danger">-</button></td>
+          </tr>
+
+          <tr>
+            <td>Night</td>
+            <td><button type="button" class="btn btn-success">+</button></td>
+            <td><button type="button" class="btn btn-danger">-</button></td>
+          </tr>
+      </tbody>
+    </table>
+    </div>
       
-        <div class="container-fluid">
-          <div class="Container">
-          <div class="row">
-            <div class="col-sm-10">
-              <div class="card card-primary">
-                <div class="card-header">
-                  <div class="card-title">
-                    Config Pricing Model
-                  </div>
-                </div>
-       <div class="card-body">
-       <div class="row">
-      <div class="col-sm-6">
-        <div class="alert alert-default" role="alert">
-          <div class="card-body">
-            <h4>Green Zone</h4>
-            <div class="row">
-              <div class="col-sm-1">
-                <b>CP</b><br><br>
-                <b>FP</b>
-              </div>
-              <div class="col-sm-3">
-                <a href="">
-                <img src="https://via.placeholder.com/50/008000
+  </div><br><br>
+
   
-                 C/O https://placeholder.com/?text=8" class="img-fluid mb-2" alt="white sample"/>
-                  </a>
-                  <a href="">
-                  <img src="https://via.placeholder.com/50/008000
-  
-                  C/O https://placeholder.com/?text=6" class="img-fluid mb-2" alt="white sample"/>
-                  </a>
-                  <button type="button" class="btn btn-success">GH</button>
-              </div>
-  
-            <div class="col-sm-3">
-              <a href="">
-               <img src="https://via.placeholder.com/50/008000
-  
-                C/O https://placeholder.com/?text=10" class="img-fluid mb-2" alt="white sample"/>
-                </a>
-                <a href="">
-                <img src="https://via.placeholder.com/50/008000
-  
-                C/O https://placeholder.com/?text=8" class="img-fluid mb-2" alt="white sample"/>
-  
-                </a>
-                <button type="button" class="btn btn-danger">RH</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-6">
-        <div class="alert alert-default" role="alert">
-          <div class="card-body">
-            <h4>Regular Zone</h4>
-            <div class="row">
-              <div class="col-sm-3">
-                <a href="">
-                <img src="https://via.placeholder.com/50/008000
-  
-                  C/O https://placeholder.com/?text=10" class="img-fluid mb-2" alt="white sample"/>
-                   </a>
-                   <a href="">
-                    <img src="https://via.placeholder.com/50/008000
-  
-                    C/O https://placeholder.com/?text=8" class="img-fluid mb-2" alt="white sample"/>
-                    </a>
-                    <button type="button" class="btn btn-success">GH</button>
-  
-              </div>
-  
-            <div class="col-sm-3">
-              <a href="">
-               <img src="https://via.placeholder.com/50/008000
-  
-                C/O https://placeholder.com/?text=8" class="img-fluid mb-2" alt="white sample"/>
-                </a>
-                <a href="">
-                <img src="https://via.placeholder.com/50/008000
-  
-                C/O https://placeholder.com/?text=10" class="img-fluid mb-2" alt="white sample"/>
-                </a>
-                <button type="button" class="btn btn-danger">RH</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <p style="margin-left: 40%"><button type="button" class="btn btn-success">Apply</button></p>
-        </div><!-- /.container-fluid -->
-    
-      <!-- /.content -->
+
+  <div class="row" style="border: 3px solid black; width: 800px;">
+    <div class="col-sm-3" style="margin-top: 10%">
+      <h5><span class="badge badge-success" style="font-size: 24px">Green zONE</span></h5>
+    </div>
+    <div class="col-sm-9">
+      <table class="table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Increase</th>
+            <th>Decrease</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Green Zone</td>
+            <td><button type="button" class="btn btn-success">+</button></td>
+            <td><button type="button" class="btn btn-danger">-</button></td>
+          </tr>
+
+          <tr>
+            <td>Regular Zone</td>
+            <td><button type="button" class="btn btn-success">+</button></td>
+            <td><button type="button" class="btn btn-danger">-</button></td>
+          </tr>
+         </tbody>
+      </table>
+    </div>
+  </div><br>
+
+  <div class="row" style="border: 3px solid black; width: 800px;">
+    <div class="col-sm-3" style="margin-top: 14%">
+      <h5><span class="badge badge-success" style="font-size: 24px">Occupancy</span></h5>
+    </div>
+    <div class="col-sm-9">
+      <table class="table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Increase</th>
+            <th>Decrease</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Low</td>
+            <td><button type="button" class="btn btn-success">+</button></td>
+            <td><button type="button" class="btn btn-danger">-</button></td>
+          </tr>
+
+          <tr>
+            <td>Medium</td>
+            <td><button type="button" class="btn btn-success">+</button></td>
+            <td><button type="button" class="btn btn-danger">-</button></td>
+          </tr>
+
+          <tr>
+            <td>High</td>
+            <td><button type="button" class="btn btn-success">+</button></td>
+            <td><button type="button" class="btn btn-danger">-</button></td>
+          </tr>
+         </tbody>
+      </table>
+    </div>
+  </div><br>
+  <div class="row" style="margin-left: 25%">
+    <button type="button" class="btn btn-success">Save</button>
+  </div><br>
+  <div class="row">
+    <div class="col-sm-8">
+      <table class="table">
+        <thead>
+          <tr>
+            <th style="background-color: darkgreen;"></th>
+            <th style="background-color: darkgreen;"></th>
+            <th style="background-color: darkgreen;">Simulation</th>
+            <th style="background-color: darkgreen;"></th>
+            <th style="background-color: darkgreen;"></th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Green Hour</b></td>
+            <td><b>Green Zone</b></td>
+            <td><b>Occupancy</b></td>
+            <td><b>old Price</b></td>
+            <td><b>New Price</b></td>
+          </tr>
+          <tr>
+            <td>Morning</td>
+            <td>GZ</td>
+            <td>Low</td>
+            <td>7 Euro</td>
+            <td>9 Euro</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
-  
-  
+</div>
+
+
+

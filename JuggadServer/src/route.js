@@ -113,11 +113,11 @@ module.exports = (app, mssql) => {
 
 
   app.get("/getPricePerHourOfSelectedZone", function (req, res) {
-    //let date = req.query.date;
-    //let selectedZone = req.query.selectedZone;
-    //let startTime = req.query.startTime;
-    //let endTime = req.query.endTime;
-    //console.log(date, selectedZone, startTime, endTime);
+    let date = req.query.date;
+    let selectedZone = req.query.selectedZone;
+    let startTime = req.query.startTime;
+    let endTime = req.query.endTime;
+    console.log(date, selectedZone, startTime, endTime);
     res.json({ price: 7 }); 
   });
 
@@ -141,14 +141,12 @@ app.get("/getPriceOfTheDay", function (req, res) {
   let DatOccupancyCallBack = function (err, occupancy) {
     if(occupancy && occupancy.recordset[0].occ !== null){
       occupancyPercentage = (occupancy.recordset[0].occ/360)*100; // to be used when we call alg
-
-      //Python Alg CALL
+      //Python Alg CALL : inputs - date, ocupancy
       price = 8
     }else{
       price = 0
     }
     res.json({ price: price }); //need to be removed when api comes
-
   };
   mssql.query(sql_DatPriceCallBack, DatOccupancyCallBack);
 });
@@ -165,7 +163,7 @@ app.get("/getPriceOfTheHour", function (req, res) {
       occupancyPercentage = (occupancy.recordset[0].occ/360)*100; // to be used when we call alg
       console.log(occupancyPercentage);
 
-      //Same python call, but with two inputs: date and strttime
+      //Same python call: date , occupancy
       price = 3
     }else{
       price = 0
