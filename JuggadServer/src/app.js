@@ -32,10 +32,3 @@ routes(app, mssql);
 app.listen(5011);
 
 console.log("server running");
-
- 
-
-
-
-
-

@@ -1,16 +1,14 @@
 <div class="container">
   <div class="row">
-    <span class="badge badge-success" style="font-size: 18px; width: 800px;">Change Pricing-Model Tunning</span>
+    <span class="badge badge-success" style="font-size: 18px; width: 500px;">Change Pricing-Model Tunning</span>
   </div><br>
 
-  <div class="row" style="border: 3px solid black; width: 800px;">
-    <div class="col-sm-3" style="margin-top: 16%">
-      <h5><span class="badge badge-success" style="font-size: 24px">Green Hour</span></h5>
-    </div>
-    <div class="col-sm-9">
+  <div class="row">
+    <div class="col-sm-5"style="border: 3px solid black;">
       <table class="table">
         <thead>
           <tr>
+          <th></th>
             <th></th>
             <th>Increase</th>
             <th>Decrease</th>
@@ -18,44 +16,85 @@
         </thead>
         <tbody>
           <tr>
+            <td></td>
             <td>Morning</td>
-            <td><button type="button" class="btn btn-success">+</button></td>
-            <td><button type="button" class="btn btn-danger">-</button></td>
+            <td><button type="button" class="btn btn-success" (click) = "changeGreenHourPrice('Morning','Plus')">+</button></td>
+            <td><button type="button" class="btn btn-danger" (click) = "changeGreenHourPrice('Morning','Minus')">-</button></td>
           </tr>
 
           <tr>
+          <td><span class="badge badge-success" style="font-size: 24px">Green Hour</span></td>
             <td>Afternoon</td>
-            <td><button type="button" class="btn btn-success">+</button></td>
-            <td><button type="button" class="btn btn-danger">-</button></td>
+            <td><button type="button" class="btn btn-success" (click) = "changeGreenHourPrice('Afternoon','Plus')">+</button></td>
+            <td><button type="button" class="btn btn-danger" (click) = "changeGreenHourPrice('Afternoon','Minus')">-</button></td>
           </tr>
 
           <tr>
+            <td></td>
             <td>Evening</td>
-            <td><button type="button" class="btn btn-success">+</button></td>
-            <td><button type="button" class="btn btn-danger">-</button></td>
+            <td><button type="button" class="btn btn-success" (click) = "changeGreenHourPrice('Evening','Plus')">+</button></td>
+            <td><button type="button" class="btn btn-danger" (click) = "changeGreenHourPrice('Evening','Minus')">-</button></td>
           </tr>
 
           <tr>
+            <td></td>
             <td>Night</td>
-            <td><button type="button" class="btn btn-success">+</button></td>
-            <td><button type="button" class="btn btn-danger">-</button></td>
+            <td><button type="button" class="btn btn-success" (click) = "changeGreenHourPrice('Night','Plus')">+</button></td>
+            <td><button type="button" class="btn btn-danger" (click) = "changeGreenHourPrice('Night','Minus')">-</button></td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-sm-6 offset-1" style="float: right;" >
+    <span class="badge badge-success" style="font-size: 18px;width: 530px">Simulation</span><br><br>
+      <table class="table">
+        <thead style="background-color: darkgreen">
+          <tr>
+            <th>Green Hour</th>
+            <th>Green Zone</th>
+            <th>Occupancy</th>
+            <th>old Price</th>
+            <th>New Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><select [(ngModel)]="selectedDayPart">
+              <option value = "select">--Select--</option>
+              <option value = "Morning">Morning</option>
+              <option value = "Afternoon">Afternoon</option>
+              <option value = "Evening">Evening</option>
+              <option value = "Night">Night</option>
+            </select></td>
+            <td><select [(ngModel)]="selectedZone">
+              <option value = "select">--Select--</option>
+              <option value = "GZ">GZ</option>
+              <option value = "RZ">RZ</option>
+            </select></td>
+            <td><select [(ngModel)]="selectedOccupancy" (change) = "simulateBooking('old')">
+              <option value = "select">--Select--</option>
+              <option value = "Low">Low</option>
+              <option value = "Medium">Medium</option>
+              <option value = "High">High</option>
+            </select></td>
+            <td>{{oldPrice}}</td>
+            <td>{{newPrice}}</td>
           </tr>
       </tbody>
     </table>
     </div>
       
-  </div><br><br>
+</div><br><br>
 
   
 
-  <div class="row" style="border: 3px solid black; width: 800px;">
-    <div class="col-sm-3" style="margin-top: 10%">
-      <h5><span class="badge badge-success" style="font-size: 24px">Green zONE</span></h5>
-    </div>
-    <div class="col-sm-9">
+  <div class="row">
+    <div class="col-sm-5" style="border: 3px solid black;">
       <table class="table">
         <thead>
           <tr>
+            <th></th>
             <th></th>
             <th>Increase</th>
             <th>Decrease</th>
@@ -63,29 +102,29 @@
         </thead>
         <tbody>
           <tr>
+          <td><span class="badge badge-success" style="font-size: 24px; margin-top: 20px;">Green Zone</span></td>
             <td>Green Zone</td>
-            <td><button type="button" class="btn btn-success">+</button></td>
-            <td><button type="button" class="btn btn-danger">-</button></td>
+            <td><button type="button" class="btn btn-success" (click) = "changeGreenHourPrice('GZ','Plus')">+</button></td>
+            <td><button type="button" class="btn btn-danger" (click) = "changeGreenHourPrice('RZ','Minus')">-</button></td>
           </tr>
 
           <tr>
+            <td></td>
             <td>Regular Zone</td>
-            <td><button type="button" class="btn btn-success">+</button></td>
-            <td><button type="button" class="btn btn-danger">-</button></td>
+            <td><button type="button" class="btn btn-success" (click) = "changeGreenHourPrice('GZ','Plus')">+</button></td>
+            <td><button type="button" class="btn btn-danger" (click) = "changeGreenHourPrice('RZ','Minus')">-</button></td>
           </tr>
          </tbody>
       </table>
     </div>
   </div><br>
 
-  <div class="row" style="border: 3px solid black; width: 800px;">
-    <div class="col-sm-3" style="margin-top: 14%">
-      <h5><span class="badge badge-success" style="font-size: 24px">Occupancy</span></h5>
-    </div>
-    <div class="col-sm-9">
+  <div class="row">
+    <div class="col-sm-5" style="border: 3px solid black;">
       <table class="table">
         <thead>
           <tr>
+          <th></th>
             <th></th>
             <th>Increase</th>
             <th>Decrease</th>
@@ -93,21 +132,24 @@
         </thead>
         <tbody>
           <tr>
+            <td></td>
             <td>Low</td>
-            <td><button type="button" class="btn btn-success">+</button></td>
-            <td><button type="button" class="btn btn-danger">-</button></td>
+            <td><button type="button" class="btn btn-success" (click) = "changeOccupancyPrice('Low','Plus')">+</button></td>
+            <td><button type="button" class="btn btn-danger" (click) = "changeOccupancyPrice('Low','Minus')">-</button></td>
           </tr>
 
           <tr>
+            <td><span class="badge badge-success" style="font-size: 24px">Occupancy</span></td>
             <td>Medium</td>
-            <td><button type="button" class="btn btn-success">+</button></td>
-            <td><button type="button" class="btn btn-danger">-</button></td>
+            <td><button type="button" class="btn btn-success" (click) = "changeOccupancyPrice('Medium','Plus')">+</button></td>
+            <td><button type="button" class="btn btn-danger" (click) = "changeOccupancyPrice('Medium','Minus')">-</button></td>
           </tr>
 
           <tr>
+            <td></td>
             <td>High</td>
-            <td><button type="button" class="btn btn-success">+</button></td>
-            <td><button type="button" class="btn btn-danger">-</button></td>
+            <td><button type="button" class="btn btn-success" (click) = "changeOccupancyPrice('High','Plus')">+</button></td>
+            <td><button type="button" class="btn btn-danger" (click) = "changeOccupancyPrice('High','Minus')">-</button></td>
           </tr>
          </tbody>
       </table>
@@ -116,39 +158,4 @@
   <div class="row" style="margin-left: 25%">
     <button type="button" class="btn btn-success">Save</button>
   </div><br>
-  <div class="row">
-    <div class="col-sm-8">
-      <table class="table">
-        <thead>
-          <tr>
-            <th style="background-color: darkgreen;"></th>
-            <th style="background-color: darkgreen;"></th>
-            <th style="background-color: darkgreen;">Simulation</th>
-            <th style="background-color: darkgreen;"></th>
-            <th style="background-color: darkgreen;"></th>
-
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><b>Green Hour</b></td>
-            <td><b>Green Zone</b></td>
-            <td><b>Occupancy</b></td>
-            <td><b>old Price</b></td>
-            <td><b>New Price</b></td>
-          </tr>
-          <tr>
-            <td>Morning</td>
-            <td>GZ</td>
-            <td>Low</td>
-            <td>7 Euro</td>
-            <td>9 Euro</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
 </div>
-
-
-

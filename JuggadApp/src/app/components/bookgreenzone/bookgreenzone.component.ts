@@ -45,7 +45,7 @@ export class BookgreenzoneComponent implements OnInit {
   selectedMonth = 0;
   selectedYear = 0;
   today = "";
-  days;
+  days = 0;
 
 
 
@@ -66,17 +66,19 @@ export class BookgreenzoneComponent implements OnInit {
       color: 'green'
     }
   ];
+
+  priceList: PricePerDate[] = [{
+    date: "01-11-2020",
+    price: 8
+  }];
   
   ngOnInit(): void {
     var currentDate = new Date();
     this.selectedYear = currentDate.getUTCFullYear();
     this.selectedMonth = currentDate.getUTCMonth() +1;
     this.today = currentDate.getDate()+"-"+currentDate.getMonth()+"-"+currentDate.getFullYear();
-    this.days = this.getDaysInMonth(this.selectedMonth, this.selectedYear);
-    console.log("size in oninit");
-    console.log(this.days.length);
-
-    
+    this.days = this.daysInThisMonth(this.selectedMonth, this.selectedYear);
+    this.findMonthPrices();
     this.bookgreenzoneservice.getGZIds().then((data) => {
       this.GZIds = data['GZIds'].recordset;
     }).catch((err: any) => {
@@ -89,23 +91,39 @@ export class BookgreenzoneComponent implements OnInit {
     });
   }
 
-  async getDaysInMonth(month, year) {
-    let days = [];
-    console.log("date extraction starts");
-    var date = new Date(year, month, 1);
-    while (date.getMonth() === month) {
-      days.push(date.getDate()+"-"+date.getMonth()+"-"+date.getFullYear());
-      date.setDate(date.getDate() + 1);
-    }    
-    console.log(days.length);
-    return days;
+  public daysInThisMonth(month ?:number, year ?:number) {
+    return new Date(year, month, 0).getDate();
   }
-
 
   public monthChange(event){
-      this.getDaysInMonth(event.month, event.year);
+    this.days = this.daysInThisMonth(event.month, event.year);
+    this.selectedYear = event.year;
+    this.selectedMonth = event.month;
+    this.findMonthPrices();
   }
 
+  async findMonthPrices(){
+    let persons =0;
+    console.log("occupancy");
+    try{
+      for (let i = 1; i <= this.days; i++) {
+        let day = ((i < 10) ? '0' + i.toString() : i.toString()) +"-"+ this.selectedMonth +"-"+ this.selectedYear;
+        let noOfPersonsPerDay = await this.bookgreenzoneservice.getNoOfPersonsPerDay(day);
+        persons = noOfPersonsPerDay['persons'].recordsets[0][0].noOfPersons;
+        if(persons){
+          let occupancy = (persons/3600)*100;
+          let data = await this.bookgreenzoneservice.fillCalender(30, 1, 0, 7, 20, occupancy);
+          this.priceList.push({
+            date: day,
+            price: data['price']
+          });
+        }
+      }
+    }catch(e:any){
+      console.log(e);
+    }
+  }
+  
 
   public selectZoneTime(zoneName, time){
     this.selectedZone = zoneName
@@ -153,104 +171,33 @@ export class BookgreenzoneComponent implements OnInit {
     }
   }
 
-  async findColor(curr_date : any){
-  /*  let calDayPrice;
-    let day = curr_date.day;
-    let month = curr_date.month + 1; // add 1 because months are indexed from 0
-    let year = curr_date.year;
-    let calDate = day+"-"+month+"-"+year;
-
-    const dayexistsinarray = this.days.find(day => day === calDate);
-    let data = await this.bookgreenzoneservice.getPriceOfTheDay(calDate);
-    if(data){
-      calDayPrice =  data['price'];
-    }
-    if(dayexistsinarray){
-      const pricecolor: PriceColor = this.pricecolors.find(prColor => {
-        if(calDayPrice >= prColor.price_min && calDayPrice <= prColor.price_max){
-          return true;
-        }
-      }) 
-      if(pricecolor){
-      }
-    }*/
-    return "inherit";
-
-
-
-
-
-/*
-    for (let day of this.days) {
-      console.log("loop executes");
-      if(calDate === day){
-        let data = await this.bookgreenzoneservice.getPriceOfTheDay(calDate);
-        if(data){
-          calDayPrice =  data['price'];
-        }
-        if(calDayPrice){
-          const pricecolor: PriceColor = this.pricecolors.find(prColor => {
-            if(calDayPrice >= prColor.price_min && calDayPrice <= prColor.price_max){
-              return true;
-            }
-          }) 
-          if(pricecolor){
-            return pricecolor.color;
+  async fillCalender(curr_date : any){
+    let day:number = curr_date.day;
+    let currentDay = ((day < 10) ? '0' + day.toString() : day.toString()) + "-" + curr_date.month + "-" + curr_date.year;
+    let list = this.priceList;
+    if(this.priceList){
+      const datePrice: PricePerDate = this.priceList.find(priceperday => {
+        priceperday.date === currentDay});
+      if(datePrice){
+        const occupancycolor: PriceColor = this.pricecolors.find(priceColor => {
+          if(datePrice.price >= priceColor.price_min && datePrice.price <= priceColor.price_max){
+            return true;
           }
-        }else{
-          return  "inherit"
+        })
+        if(occupancycolor){
+          return occupancycolor.color;
         }
       }
-    }*/
-
-
-
-  /* if(month === this.selectedMonth && year === this.selectedYear){
-      let data = await this.bookgreenzoneservice.getPriceOfTheDay(calDate);
-      if(data){
-        calDayPrice =  data['price'];
-      }
-      const pricecolor: PriceColor = this.pricecolors.find(prColor => {
-        if(calDayPrice >= prColor.price_min && calDayPrice <= prColor.price_max){
-          return true;
-        }
-      }) 
-      if(pricecolor){
-        return pricecolor.color;
-      }
+    }else{
       return "inherit";
-    }    */
-  }
-
-
-  async findButtonColor(currenthour){
-   /* let calDayPrice;
-    let day = this.bookingdate.getDate();
-    let month = this.bookingdate.getMonth() + 1; // add 1 because months are indexed from 0
-    let year = this.bookingdate.getFullYear();
-    let calDate = day+"-"+month+"-"+year;
-
-    const hour = this.hours.find(hour => hour === currenthour);
-    let data = await this.bookgreenzoneservice.getPriceOfEachHour(calDate, hour);
-    if(data){
-      calDayPrice =  data['price'];
     }
-    if(hour){
-      const pricecolor: PriceColor = this.pricecolors.find(prColor => {
-        if(calDayPrice >= prColor.price_min && calDayPrice <= prColor.price_max){
-          return true;
-        }
-      }) 
-      if(pricecolor){
-      }
-    }*/
-    return "inherit";
+    return "yellow";
   }
 
 
 
 
-  public fillColor(curr_date : any){
+  public fillHour(curr_date : any){
     /*console.log(curr_date);
     const occDetails: PricePerDate = this.priceList.find(occ => occ.date === curr_date.day);
     if(occDetails){
@@ -285,7 +232,7 @@ export class BookgreenzoneComponent implements OnInit {
 }
 
 interface PricePerDate {
-  date: number,
+  date: string,
   price: number
 }
 
@@ -293,4 +240,9 @@ interface PriceColor {
   price_min: number,
   price_max: number,
   color: string
+}
+
+interface HourPrice {
+  hour: number,
+  price: number
 }

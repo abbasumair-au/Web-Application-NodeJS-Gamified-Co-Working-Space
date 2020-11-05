@@ -17,6 +17,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarModule } from 'primeng/calendar';
+import {DropdownModule} from 'primeng/dropdown';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { CalendarModule } from 'primeng/calendar';
     FormsModule,
     CommonModule,
     CalendarModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    DropdownModule
   ],
   providers: [],
   bootstrap: [AppComponent]

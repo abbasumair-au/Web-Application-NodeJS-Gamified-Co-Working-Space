@@ -12,6 +12,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "~10.1.6",
+    "@angular/cdk": "^10.2.7",
     "@angular/common": "~10.1.6",
     "@angular/compiler": "~10.1.6",
     "@angular/core": "~10.1.6",
@@ -23,6 +24,7 @@
     "bootstrap": "^4.5.3",
     "date-fns": "^2.16.1",
     "jquery": "^3.5.1",
+    "path": "^0.12.7",
     "popper.js": "^1.16.1",
     "primeicons": "^4.0.0",
     "primeng": "^10.0.3",

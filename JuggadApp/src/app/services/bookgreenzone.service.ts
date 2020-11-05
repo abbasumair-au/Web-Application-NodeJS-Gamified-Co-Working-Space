@@ -52,4 +52,21 @@ export class BookgreenzoneService {
   public getRZIds(){
     return this.http.get("http://localhost:5011/getRZIds").toPromise();
   }
+
+  public fillCalender(advdays, gz, rz, startTime, endTime,occupancy){
+    let params = new HttpParams();
+    params = params.append('a',advdays);
+    params = params.append('b',gz);
+    params = params.append('c',rz);
+    params = params.append('d',startTime);
+    params = params.append('e',endTime);
+    params = params.append('f',occupancy);
+    return this.http.get("http://52.91.17.178:9000/MLBookingPrice_api", {params: params}).toPromise();
+  }
+
+  async getNoOfPersonsPerDay(date){
+    let params = new HttpParams();
+    params = params.append('date',date);
+    return this.http.get("http://localhost:5011/getNoOfPersonsPerDay", {params: params}).toPromise();
+  }
 }

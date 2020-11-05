@@ -102,11 +102,11 @@ module.exports = (app, mssql) => {
     let NewBookingInsert = function (err, result) {
       if (err) throw err;
       let sql_savePoints = "INSERT INTO tblCredits (UID, CrOrDb, Total, ForWhat, ReffID) VALUES('"+UID+"', '"+bookingPoints+"', (SELECT TOP 1 Total FROM tblCredits WHERE UID = '"+UID+"' ORDER BY CID DESC)+'"+bookingPoints+"', 'BID', 1)"
-      let NewBookingInsert = function (err, result) {
+      let savePointsCallBack = function (err, result) {
         if (err) throw err;
         res.json({UId: UID,ZId: zid,date: date,starttime: starttime,endtime: endtime,cost: cost});
         };
-      mssql.query(sql_savePoints, NewBookingInsert);
+      mssql.query(sql_savePoints, savePointsCallBack);
     };
     mssql.query(sql_nb, NewBookingInsert);
   });
@@ -139,6 +139,7 @@ app.get("/getPriceOfTheDay", function (req, res) {
   let sql_DatPriceCallBack ="select sum((EndTime-StartTime)*Persons) AS occ from tblbookings where date like '"+date+"';";
   let price;
   let DatOccupancyCallBack = function (err, occupancy) {
+    if (err) throw err;
     if(occupancy && occupancy.recordset[0].occ !== null){
       occupancyPercentage = (occupancy.recordset[0].occ/360)*100; // to be used when we call alg
       //Python Alg CALL : inputs - date, ocupancy
@@ -159,6 +160,7 @@ app.get("/getPriceOfTheHour", function (req, res) {
   let sql_DatPriceCallBack ="select sum((EndTime-StartTime)*Persons) AS occ from tblbookings where date like '"+date+"' and starttime = '"+startTime+"';";
   console.log(sql_DatPriceCallBack);
   let DatOccupancyCallBack = function (err, occupancy) {
+    if (err) throw err;
     if(occupancy && occupancy.recordset[0].occ !== null){
       occupancyPercentage = (occupancy.recordset[0].occ/360)*100; // to be used when we call alg
       console.log(occupancyPercentage);
@@ -174,6 +176,93 @@ app.get("/getPriceOfTheHour", function (req, res) {
   mssql.query(sql_DatPriceCallBack, DatOccupancyCallBack);
 });
 
+app.get("/changeGreenHourPrice", function (req, res) {
+  console.log("inside GH");
+  let dayPart = req.query.dayPart;
+  let action = req.query.action;
+  let sql_PriceChangeQuery = "";
+
+  if(dayPart === "Morning" && action === "Plus"){
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price + 1 where starttime in (6,7,8);";
+  }else if(dayPart === "Afternoon" && action === "Plus"){
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price + 1 where starttime in (9,10,11,12,13,14,15,16,17,18);";
+  }else if(dayPart === "Evening" && action === "Plus"){
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price + 1 where starttime in (19,20,21,22);";
+  }else if(dayPart === "Night" && action === "Plus"){
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price + 1 where starttime in (22,23,24,0,1,2,3,4,5);";
+  }else if(dayPart === "Morning" && action === "Minus"){
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price - 1 where starttime in (6,7,8);";
+  }else if(dayPart === "Afternoon" && action === "Minus"){
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price - 1 where starttime in (9,10,11,12,13,14,15,16,17,18);";
+  }else if(dayPart === "Evening" && action === "Minus"){
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price - 1 where starttime in (19,20,21,22);";
+  }else if(dayPart === "Night" && action === "Minus"){
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price - 1 where starttime in (22,23,24,0,1,2,3,4,5);";
+  }
+
+  let PriceChangeQuery = function (err, result) {
+    if (err) throw err;
+    res.json({ result: result }); //need to be removed when api comes
+  };
+  mssql.query(sql_PriceChangeQuery, PriceChangeQuery);
+});
+
+app.get("/changeGZPrice", function (req, res) {
+  console.log("inside GZ");
+  let zone = req.query.zone;
+  let action = req.query.action;
+  let sql_PriceChangeQuery = "";
+
+  if(zone === "GZ" && action === "Plus"){
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price + 1 where gz = 1;";
+  }else if(zone === "RZ" && action === "Plus"){
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price + 1 where rz = 1;";
+  }else if(zone === "GZ" && action === "Minus"){
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price - 1 where gz = 1;";
+  }else if(zone === "RZ" && action === "Minus"){
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price - 1 where rz = 1;";
+  }
+  let PriceChangeQuery = function (err, result) {
+    if (err) throw err;
+    res.json({ result: result }); //need to be removed when api comes
+  };
+  mssql.query(sql_PriceChangeQuery, PriceChangeQuery);
+});
+
+app.get("/changeOccupancyPrice", function (req, res) {
+  let occ = req.query.occ;
+  let action = req.query.action;
+  let sql_PriceChangeQuery = "";
+
+  if(occ === "Low" && action === "Plus"){
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price + 1 where occupancy < 31;";
+  }else if(occ === "Medium" && action === "Plus"){
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price + 1 where occupancy > 30 and occupancy < 71;";
+  }else if(occ === "High" && action === "Plus"){
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price + 1 where occupancy > 70;";
+  }else if(occ === "Low" && action === "Minus"){
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price - 1 where occupancy < 31;";
+  }else if(occ === "Medium" && action === "Minus"){
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price - 1 where occupancy > 30 and occupancy < 71;";
+  }else if(occ === "High" && action === "Minus"){
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price - 1 where occupancy > 70;";
+  }
+  let PriceChangeQuery = function (err, result) {
+    if (err) throw err;
+    res.json({ result: result }); //need to be removed when api comes
+  };
+  mssql.query(sql_PriceChangeQuery, PriceChangeQuery);
+});
+
+app.get("/getNoOfPersonsPerDay", function (req, res) {
+  let date = req.query.date;
+  sql_GetOccupancy = "select sum((EndTime-StartTime)*Persons) AS noOfPersons from tblbookings where date like '"+date+"';";
+  let NoOfPersonsPerDay = function (err, persons) {
+    if (err) throw err;
+    res.json({ persons: persons }); //need to be removed when api comes
+  };
+  mssql.query(sql_GetOccupancy, NoOfPersonsPerDay);
+});
 
 
 /*
