@@ -21,9 +21,13 @@ export class LoginComponent implements OnInit {
 
   public login(){
     this.loginservice.login(this.username, this.password).then((data) => {
-      sessionStorage.setItem('userId', data['user'].recordset[0].userId);
-      sessionStorage.setItem('name', data['user'].recordset[0].name);
-      this.router.navigate(['/home']);
+      if(this.username === "admin" &&  this.password === "admin"){
+        this.router.navigate(['/admin']);
+      }else{
+        sessionStorage.setItem('userId', data['user'].recordset[0].userId);
+        sessionStorage.setItem('name', data['user'].recordset[0].name);
+        this.router.navigate(['/home']);
+      }
     }).catch((err: any) => {
       console.log(err);
     });

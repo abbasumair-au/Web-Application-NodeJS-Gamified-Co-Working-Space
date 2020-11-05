@@ -8,13 +8,15 @@ export class BookgreenzoneService {
 
   constructor(private http: HttpClient) { }
 
-  public getPricePerHourOfSelectedZone(date, selectedZone, startTime, endTime){
-    //let params = new HttpParams();
-    //params = params.append('date',date);
-    //params = params.append('selectedZone',selectedZone);
-    //params = params.append('startTime', startTime);
-    //params = params.append('endTime', endTime);
-    return this.http.get("http://localhost:5011/getPricePerHourOfSelectedZone"/*, {params: params}*/).toPromise();
+  public getPricePerHourOfSelectedZone(advdays, gz, rz, startTime, endTime, occupancy){
+    let params = new HttpParams();
+    params = params.append('a',advdays);
+    params = params.append('b',gz);
+    params = params.append('c', rz);
+    params = params.append('d', startTime);
+    params = params.append('e', endTime);
+    params = params.append('f', occupancy);
+    return this.http.get("http://52.91.17.178:9000/MLBookingPrice_api", {params: params}).toPromise();
   }
 
   public getPriceOfTheDay(date){

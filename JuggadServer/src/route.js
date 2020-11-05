@@ -85,7 +85,7 @@ module.exports = (app, mssql) => {
   app.post("/saveBooking", function (req, res) {
     
     console.log("inside savebooking route");
-   
+    console.log()
     let zid = req.body.zoneId;
     let UID = req.body.UID;
     let date =req.body.date;
@@ -95,6 +95,7 @@ module.exports = (app, mssql) => {
     let persons = 1;
     let action = "Act";
     let bookingPoints = 10;
+    console.log(zid+":"+UID+":"+date+":"+starttime+":"+endtime+":"+cost)
    
     let sql_nb ="INSERT INTO tblBookings (UID,ZID,Date,StartTime,EndTime,cost,Persons,ActOrMoved) VALUES ('" +UID +
     "','" +zid +"','" +date +"','" +starttime+"','" +endtime+"','" +cost +"','" +persons +"','" +action +"')";
@@ -109,16 +110,6 @@ module.exports = (app, mssql) => {
       mssql.query(sql_savePoints, savePointsCallBack);
     };
     mssql.query(sql_nb, NewBookingInsert);
-  });
-
-
-  app.get("/getPricePerHourOfSelectedZone", function (req, res) {
-    let date = req.query.date;
-    let selectedZone = req.query.selectedZone;
-    let startTime = req.query.startTime;
-    let endTime = req.query.endTime;
-    console.log(date, selectedZone, startTime, endTime);
-    res.json({ price: 7 }); 
   });
 
   app.get('/userTrefels', function (req, res) {

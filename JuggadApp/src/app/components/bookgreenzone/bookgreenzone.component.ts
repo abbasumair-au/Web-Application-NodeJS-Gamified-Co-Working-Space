@@ -131,17 +131,22 @@ export class BookgreenzoneComponent implements OnInit {
     let month = this.bookingdate.getMonth() + 1; // add 1 because months are indexed from 0
     let year = this.bookingdate.getFullYear();
     this.date = day+"-"+month+"-"+year;
+    let gz;
+    let rz;
     if(zoneName === 'GZ'){
       if(this.isFirstGZTime){
         this.startTime = time;
         this.showStartTime = this.startTime+":00";
         this.isFirstGZTime = false;
         this.showEndTime="";
+        gz = 1;
+        rz = 0;
       }else{
         this.endTime = time;
         this.showEndTime = this.endTime+":00";
         this.txt_hours = this.endTime - this.startTime;
-        
+        rz = 1;
+        gz = 0;
       }
     }else{
       if(this.isFirstRZTime){
@@ -155,10 +160,12 @@ export class BookgreenzoneComponent implements OnInit {
         this.txt_hours = this.endTime - this.startTime;
       }
     } 
+
     this.txt_totalPrice = 0;
     if(this.endTime != 0){
-      this.bookgreenzoneservice.getPricePerHourOfSelectedZone(this.date, zoneName, this.startTime, this.endTime).then((data) => {
-        this.price =  data['price'];
+      this.bookgreenzoneservice.getPricePerHourOfSelectedZone(30, gz, rz, this.startTime, this.endTime, 70).then((data) => {
+        console.log(data['price']);
+        this.price =  Math.round(data['price']);
         if(this.price == 0){
           this.price =7
         }
@@ -172,7 +179,7 @@ export class BookgreenzoneComponent implements OnInit {
   }
 
   async fillCalender(curr_date : any){
-    let day:number = curr_date.day;
+    /*let day:number = curr_date.day;
     let currentDay = ((day < 10) ? '0' + day.toString() : day.toString()) + "-" + curr_date.month + "-" + curr_date.year;
     let list = this.priceList;
     if(this.priceList){
@@ -190,7 +197,7 @@ export class BookgreenzoneComponent implements OnInit {
       }
     }else{
       return "inherit";
-    }
+    }*/
     return "yellow";
   }
 
@@ -215,15 +222,19 @@ export class BookgreenzoneComponent implements OnInit {
 
 
   public bookZone(){
-    let randomZoneId;
+    console.log(this.GZIds);
+    console.log(this.RZIds);
+    let randomZoneId: number;
     if(this.selectedZone === 'GZ'){
-      randomZoneId = this.GZIds[Math.random() * this.GZIds.length];
+      randomZoneId = this.GZIds[Math.floor(Math.random() * this.GZIds.length)];
     }else{
       randomZoneId = this.RZIds[Math.random() * this.RZIds.length];
-    }
+    } 
+    console.log(randomZoneId['zoneId']);
+
 
     this.userId = parseInt(sessionStorage.getItem('userId'));
-    this.bookgreenzoneservice.saveBooking(2, randomZoneId, this.date, this.startTime, this.endTime, this.price).then((data) => {
+    this.bookgreenzoneservice.saveBooking(this.userId, randomZoneId['zoneId'], this.date, this.startTime, this.endTime, this.price).then((data) => {
       this.router.navigate(['/home']);
     }).catch((err: any) => {
       console.log(err);
