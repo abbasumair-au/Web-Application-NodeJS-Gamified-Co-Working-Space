@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-module.exports = (app, mssql) => {
+module.exports = (app, mssql, shell) => {
   app.get("/", function (req, res) {
     // send the main (and unique) page
     res.setHeader("Content-Type", "text/html");
@@ -266,6 +266,18 @@ app.get("/getNoOfPersonsPerDayAndStartTime", function (req, res) {
   mssql.query(sql_persons, NoOfPersonsPerDay);
 });
 
+app.get("/updateSimulationModel", function (req, res) {
+  shell.exec('/home/ubuntu/flaskapp/RefreshSimulationModel.sh');
+  res.json({status: "updated"});
+});
+
+app.get("/updateBookingPriceModel", function (req, res) {
+  shell.exec('/home/ubuntu/flaskapp/RefreshMLBookingPriceModel.sh');
+  res.json({status: "updated"});
+});
+
+
+
 
 /*
 app.get('/homeViewBookingToday', function (req, res) {
@@ -281,5 +293,7 @@ app.get('/homeViewBookingToday', function (req, res) {
   mssql.query(sql_vbt, ViewBookingToday);
 });
 */
+
+
 
 };

@@ -24,6 +24,7 @@
     "ejs": "^3.1.5",
     "express": "^4.17.1",
     "mssql": "^6.2.3",
-    "python-shell": "^2.0.2"
+    "python-shell": "^2.0.2",
+    "shelljs": "^0.8.4"
   }
 }

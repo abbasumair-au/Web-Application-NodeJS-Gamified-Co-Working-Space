@@ -3,6 +3,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const shell = require('shelljs')
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
@@ -26,7 +27,7 @@ mssql.connect(config, function (err) {
 });
 
 const routes = require('./route.js');
-routes(app, mssql);
+routes(app, mssql,shell);
 
 // run server  
 app.listen(5011);
