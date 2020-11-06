@@ -247,12 +247,23 @@ app.get("/changeOccupancyPrice", function (req, res) {
 
 app.get("/getNoOfPersonsPerDay", function (req, res) {
   let date = req.query.date;
-  sql_GetOccupancy = "select sum((EndTime-StartTime)*Persons) AS noOfPersons from tblbookings where date like '"+date+"';";
+  sql_persons = "select sum((EndTime-StartTime)*Persons) AS noOfPersons from tblbookings where date like '"+date+"';";
   let NoOfPersonsPerDay = function (err, persons) {
     if (err) throw err;
     res.json({ persons: persons }); //need to be removed when api comes
   };
-  mssql.query(sql_GetOccupancy, NoOfPersonsPerDay);
+  mssql.query(sql_persons, NoOfPersonsPerDay);
+});
+
+app.get("/getNoOfPersonsPerDayAndStartTime", function (req, res) {
+  let date = req.query.date;
+  let startTime = req.query.startTime;
+  sql_persons = "select sum((EndTime-StartTime)*Persons) AS noOfPersons from tblbookings where date like '"+date+"' and starttime = '"+startTime+"';";
+  let NoOfPersonsPerDay = function (err, persons) {
+    if (err) throw err;
+    res.json({ persons: persons }); //need to be removed when api comes
+  };
+  mssql.query(sql_persons, NoOfPersonsPerDay);
 });
 
 

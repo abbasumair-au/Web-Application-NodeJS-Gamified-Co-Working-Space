@@ -5,6 +5,7 @@
   "main": "angularNodeApp.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "echo This is the DEV script",
     "start": "node src/app.js"
   },
   "repository": {
