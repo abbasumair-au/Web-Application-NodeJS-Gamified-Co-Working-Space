@@ -15,7 +15,7 @@ export class BookgreenzoneComponent implements OnInit {
   viewDate: Date = new Date();
   events = [];
   zones :any = [];
-
+  isPriceReceived = false;
   selectedZone = "";
   time ="";
   date ="";
@@ -53,17 +53,17 @@ export class BookgreenzoneComponent implements OnInit {
   pricecolors : PriceColor[] = [
     {
       price_min: 0,
-      price_max: 5,
-      color: 'red'
+      price_max: 10,
+      color: 'green'
     },
     {
-      price_min: 6,
-      price_max: 10,
+      price_min: 11,
+      price_max: 20,
       color: 'yellow'
     },{
-      price_min: 11,
+      price_min: 21,
       price_max: 100,
-      color: 'green'
+      color: 'red'
     }
   ];
 
@@ -119,6 +119,10 @@ export class BookgreenzoneComponent implements OnInit {
   }
 
   public daySelected(event){
+    this.hourOccList = [];
+    for(let i=0; i<24;i++){
+      this.hourOccList.push(null);
+    }
     console.log("event");
     let month = event.getUTCMonth() +1;
     this.selectedDate = ((event.getDate() < 10) ? '0' + event.getDate().toString() : event.getDate().toString()) +"-"+ month +"-"+ event.getUTCFullYear();
@@ -155,7 +159,7 @@ export class BookgreenzoneComponent implements OnInit {
 
   async findMonthPrices(){
     this.priceList = [];
-   let persons =0;
+    let persons =0;
     try{
       for (let i = 1; i <= this.days; i++) {
         let day = ((i < 10) ? '0' + i.toString() : i.toString()) +"-"+ this.selectedMonth +"-"+ this.selectedYear;
@@ -170,6 +174,7 @@ export class BookgreenzoneComponent implements OnInit {
           });
         }
       }
+      this.isPriceReceived = true;
     }catch(e:any){
       console.log(e);
     }
@@ -238,21 +243,25 @@ export class BookgreenzoneComponent implements OnInit {
   }
 
   public fillCalender(curr_date : any){
-    let day:number = curr_date.day;
-    let currentDay = ((day < 10) ? '0' + day.toString() : day.toString()) + "-" + curr_date.month + "-" + curr_date.year;
-    let list = this.priceList;
-    if(this.priceList){
-      const datePrice: PricePerDate = this.priceList.find(priceperday => {
-        priceperday.date === currentDay});
-      if(datePrice){
-        const occupancycolor: PriceColor = this.pricecolors.find(priceColor => {
-          if(datePrice.price >= priceColor.price_min && datePrice.price <= priceColor.price_max){
-            return true;
+    if(this.selectedMonth ===(curr_date.month+1) && this.selectedYear === curr_date.year){
+      let day:number = curr_date.day;
+      let currentDay = ((day < 10) ? '0' + day.toString() : day.toString()) + "-" + (curr_date.month+1) + "-" + curr_date.year;
+      if(this.priceList){
+        const datePrice: PricePerDate = this.priceList.find(priceperday=>priceperday.date === currentDay);
+        if(datePrice){
+          const occupancycolor: PriceColor = this.pricecolors.find(priceColor => {
+            if(datePrice.price >= priceColor.price_min && datePrice.price <= priceColor.price_max){
+              return true;
+            }
+          })
+          if(occupancycolor){
+            return occupancycolor.color;
           }
-        })
-        if(occupancycolor){
-          return occupancycolor.color;
+        }else{
+          return "inherit";
         }
+      }else{
+        return "inherit";
       }
     }else{
       return "inherit";

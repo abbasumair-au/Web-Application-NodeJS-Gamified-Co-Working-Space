@@ -6,7 +6,7 @@
         <ng-template pTemplate="date" let-date>
           <span
             [ngStyle]="{
-              'background-color': fillCalender(date)
+              'background-color': (isPriceReceived?fillCalender(date):'')
             }"
             style="
               border-radius: 50%;

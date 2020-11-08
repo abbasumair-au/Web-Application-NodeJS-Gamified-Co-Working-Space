@@ -218,7 +218,7 @@ app.get("/getNoOfPersonsPerDay", function (req, res) {
 app.get("/getNoOfPersonsPerDayAndStartTime", function (req, res) {
   console.log('inside getNoOfPersonsPerDayAndStartTime');
   let date  = req.query.date;
-  let sql_persons = "select startTime AS startTime, (sum((EndTime-StartTime)*Persons)*100)/3600 AS occupancyByTime from tblbookings where date LIKE '"+date+"' GROUP BY startTime;";
+  let sql_persons = "select startTime AS startTime, (sum((EndTime-StartTime)*Persons)*100)/3600 AS dfhgthjk from tblbookings where date LIKE '"+date+"' GROUP BY startTime;";
   let NoOfPersonsPerDay = function (err, occupancyByTime) {
     if (err) throw err;
     console.log(occupancyByTime.recordsets[0]);
@@ -235,20 +235,19 @@ app.get("/updateBookingPriceModel", function (req, res) {
   res.json({status: "updated"});
 });
 
-/*
-app.get('/homeViewBookingToday', function (req, res) {
-        
-  var Date = (req.query.Date);
+app.get('/ViewTodayBooking', function(req, res){
+  
+  let today =  req.query.today;
+  let tomorrow = req.query.tomorrow;
+  let uId = parseInt(req.query.uId);
 
-  let sql_vbt = "SELECT b.* ,z.RoomNo FROM tblBookings b,tblZones z WHERE b.Date = '"+Date+"'AND b.ZID = z.ZID ";
-
-  let ViewBookingToday = function (err, result) {
-      if (err) throw err;
-      res.json({ Date: Date});
+  let sql_ViewTodayBooking = "select b.BID,b.ZID,b.Date, b.StartTime, b.EndTime, z.Zone, z.RoomNo from tblBookings b, tblZones z where b.ZID = z.ZID and b.UID = '"+uId+"' and  b.Date in('"+today+"','"+tomorrow+"')";
+  let ViewTodayBooking = function(err, result){
+    if(err) throw err;
+    res.json({currentBooking: result});
   };
-  mssql.query(sql_vbt, ViewBookingToday);
+  mssql.query(sql_ViewTodayBooking, ViewTodayBooking);
 });
-*/
 
 
 
