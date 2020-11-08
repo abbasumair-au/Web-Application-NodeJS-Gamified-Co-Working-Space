@@ -50,4 +50,11 @@ export class AdminService {
     params = params.append('f',occupancy);
     return this.http.get("http://52.91.17.178:9000/MLBookingPrice_api", {params: params}).toPromise();
   }
+
+
+
+  public updateBookingPriceModel(){
+    return this.http.get("http://localhost:5011/updateBookingPriceModel").toPromise();
+  }
+
 }

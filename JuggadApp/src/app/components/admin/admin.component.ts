@@ -129,4 +129,13 @@ export class AdminComponent implements OnInit {
     }
   }
 
+  
+  public updateBookingPriceModel(){
+    this.adminservice.updateBookingPriceModel().then((data) => {
+      console.log(data);
+    }).catch((err: any) => {
+      console.log(err);
+    });
+  }
+
 }

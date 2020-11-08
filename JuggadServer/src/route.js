@@ -124,49 +124,6 @@ module.exports = (app, mssql, shell) => {
     mssql.query(sql_trefels, CurrentTrefels);
 });
 
-
-app.get("/getPriceOfTheDay", function (req, res) {
-  let date  = req.query.date; // to be used when we call alg
-  let sql_DatPriceCallBack ="select sum((EndTime-StartTime)*Persons) AS occ from tblbookings where date like '"+date+"';";
-  let price;
-  let DatOccupancyCallBack = function (err, occupancy) {
-    if (err) throw err;
-    if(occupancy && occupancy.recordset[0].occ !== null){
-      occupancyPercentage = (occupancy.recordset[0].occ/360)*100; // to be used when we call alg
-      //Python Alg CALL : inputs - date, ocupancy
-      price = 8
-    }else{
-      price = 0
-    }
-    res.json({ price: price }); //need to be removed when api comes
-  };
-  mssql.query(sql_DatPriceCallBack, DatOccupancyCallBack);
-});
-
-app.get("/getPriceOfTheHour", function (req, res) {
-  let date  = req.query.date; // to be used when we call alg
-  let startTime  = req.query.startTime;
-  console.log(date+":"+startTime);
-
-  let sql_DatPriceCallBack ="select sum((EndTime-StartTime)*Persons) AS occ from tblbookings where date like '"+date+"' and starttime = '"+startTime+"';";
-  console.log(sql_DatPriceCallBack);
-  let DatOccupancyCallBack = function (err, occupancy) {
-    if (err) throw err;
-    if(occupancy && occupancy.recordset[0].occ !== null){
-      occupancyPercentage = (occupancy.recordset[0].occ/360)*100; // to be used when we call alg
-      console.log(occupancyPercentage);
-
-      //Same python call: date , occupancy
-      price = 3
-    }else{
-      price = 0
-    }
-    res.json({ price: price }); //need to be removed when api comes
-
-  };
-  mssql.query(sql_DatPriceCallBack, DatOccupancyCallBack);
-});
-
 app.get("/changeGreenHourPrice", function (req, res) {
   console.log("inside GH");
   let dayPart = req.query.dayPart;
@@ -193,6 +150,7 @@ app.get("/changeGreenHourPrice", function (req, res) {
 
   let PriceChangeQuery = function (err, result) {
     if (err) throw err;
+    shell.exec('/home/ubuntu/flaskapp/RefreshSimulationModel.sh');
     res.json({ result: result }); //need to be removed when api comes
   };
   mssql.query(sql_PriceChangeQuery, PriceChangeQuery);
@@ -215,6 +173,7 @@ app.get("/changeGZPrice", function (req, res) {
   }
   let PriceChangeQuery = function (err, result) {
     if (err) throw err;
+    shell.exec('/home/ubuntu/flaskapp/RefreshSimulationModel.sh');
     res.json({ result: result }); //need to be removed when api comes
   };
   mssql.query(sql_PriceChangeQuery, PriceChangeQuery);
@@ -240,6 +199,7 @@ app.get("/changeOccupancyPrice", function (req, res) {
   }
   let PriceChangeQuery = function (err, result) {
     if (err) throw err;
+    shell.exec('/home/ubuntu/flaskapp/RefreshSimulationModel.sh');
     res.json({ result: result }); //need to be removed when api comes
   };
   mssql.query(sql_PriceChangeQuery, PriceChangeQuery);
@@ -256,28 +216,24 @@ app.get("/getNoOfPersonsPerDay", function (req, res) {
 });
 
 app.get("/getNoOfPersonsPerDayAndStartTime", function (req, res) {
-  let date = req.query.date;
-  let startTime = req.query.startTime;
-  sql_persons = "select sum((EndTime-StartTime)*Persons) AS noOfPersons from tblbookings where date like '"+date+"' and starttime = '"+startTime+"';";
-  let NoOfPersonsPerDay = function (err, persons) {
+  console.log('inside getNoOfPersonsPerDayAndStartTime');
+  let date  = req.query.date;
+  let sql_persons = "select startTime AS startTime, (sum((EndTime-StartTime)*Persons)*100)/3600 AS occupancyByTime from tblbookings where date LIKE '"+date+"' GROUP BY startTime;";
+  let NoOfPersonsPerDay = function (err, occupancyByTime) {
     if (err) throw err;
-    res.json({ persons: persons }); //need to be removed when api comes
+    console.log(occupancyByTime.recordsets[0]);
+    res.json({ occupancyByTime: occupancyByTime }); //need to be removed when api comes
   };
   mssql.query(sql_persons, NoOfPersonsPerDay);
+
+
 });
 
-app.get("/updateSimulationModel", function (req, res) {
-  shell.exec('/home/ubuntu/flaskapp/RefreshSimulationModel.sh');
-  res.json({status: "updated"});
-});
 
 app.get("/updateBookingPriceModel", function (req, res) {
   shell.exec('/home/ubuntu/flaskapp/RefreshMLBookingPriceModel.sh');
   res.json({status: "updated"});
 });
-
-
-
 
 /*
 app.get('/homeViewBookingToday', function (req, res) {

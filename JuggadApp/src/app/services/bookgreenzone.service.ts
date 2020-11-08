@@ -19,18 +19,6 @@ export class BookgreenzoneService {
     return this.http.get("http://52.91.17.178:9000/MLBookingPrice_api", {params: params}).toPromise();
   }
 
-  public getPriceOfTheDay(date){
-    let params = new HttpParams();
-    params = params.append('date',date);
-    return this.http.get("http://localhost:5011/getPriceOfTheDay", {params: params}).toPromise();
-  }
-
-  public getPriceOfEachHour(date, startTime){
-    let params = new HttpParams();
-    params = params.append('date',date);
-    return this.http.get("http://localhost:5011/getPriceOfTheDay", {params: params}).toPromise();
-  }
-
   public checkOccupancy(zoneId){
     let params = new HttpParams();
    params = params.append('zoneId',zoneId);
@@ -71,10 +59,10 @@ export class BookgreenzoneService {
     params = params.append('date',date);
     return this.http.get("http://localhost:5011/getNoOfPersonsPerDay", {params: params}).toPromise();
   }
-  async getNoOfPersonsPerDayAndStartTime(date, startTime){
+  public getNoOfPersonsPerDayAndStartTime(date){
     let params = new HttpParams();
     params = params.append('date',date);
-    params = params.append('startTime',startTime);
     return this.http.get("http://localhost:5011/getNoOfPersonsPerDayAndStartTime", {params: params}).toPromise();
   }
+
 }

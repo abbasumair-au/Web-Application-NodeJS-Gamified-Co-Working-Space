@@ -2,11 +2,11 @@
   <div class="row">
     <div class="col-sm-12 offset-sm-3">
       <!-- <h4 style="color: green; padding-left: 40px; padding-top: 20px;">Manage Your Booking</h4> -->
-      <p-calendar [(ngModel)]="bookingdate" [inline]="true" (onMonthChange)="monthChange($event)">
+      <p-calendar [(ngModel)]="bookingdate" [inline]="true" (onMonthChange)= "monthChange($event)" (onSelect)= "daySelected($event)" >
         <ng-template pTemplate="date" let-date>
-          <span (click) = "selectedADateFomCalender()"
+          <span
             [ngStyle]="{
-              backgroundColor: fillCalender(date)
+              'background-color': fillCalender(date)
             }"
             style="
               border-radius: 50%;
@@ -24,14 +24,30 @@
       <div class="col-sm-1">
         <h5 style="color: green"><b>Green Zone</b></h5>
       </div>
-      <div *ngFor = "let i of hours" >
-        <button type="button" class="btn btn-success" [ngStyle]="{backgroundColor: fillTimeColor(i)}" (click) = "selectZoneTime('GZ', i)">{{i}}</button>
+      <div *ngFor = "let occ of hourOccList; let i=index" >
+        <button type="button" [ngStyle]="{backgroundColor: ((occ != null) ? fillTimeColor(occ.price):'#ebebe0')}" (click) = "selectZoneTime('GZ', i)" style="font: black;
+        padding: 5px 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        border-radius: 20%;
+        cursor: pointer;">{{i}}</button>
       </div><br/><br /><br />
       <div class="col-sm-1">
         <h5 style="color: green"><b>Regular Zone</b></h5>
       </div>
-      <div  *ngFor = "let i of hours" >
-        <button type="button" class="btn btn-success" [ngStyle]="{backgroundColor: 'yellow'}" (click) = "selectZoneTime('RZ', i)">{{i}}</button>
+      <div  *ngFor = "let occ of hourOccList; let i=index" >
+        <button type="button" [ngStyle]="{backgroundColor: ((occ != null) ? fillTimeColor(occ.price):'#ebebe0')}" (click) = "selectZoneTime('RZ', i)" style="font: black;
+        padding: 5px 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        border-radius: 20%;
+        cursor: pointer;">{{i}}</button>
       </div>
     </div>
   </div>

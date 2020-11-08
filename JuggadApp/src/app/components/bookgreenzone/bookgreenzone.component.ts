@@ -34,7 +34,7 @@ export class BookgreenzoneComponent implements OnInit {
   userId: number;
   userName= "";
 
-  hours: number[] = [0, 1, 2, 3, 4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23];
+  //hours: HourPrice[] = [];
   isFirstGZTime = true;
   isFirstRZTime = true;
 
@@ -46,7 +46,7 @@ export class BookgreenzoneComponent implements OnInit {
   selectedYear = 0;
   today = "";
   days = 0;
-
+  selectedDate = "";
 
 
 
@@ -67,21 +67,33 @@ export class BookgreenzoneComponent implements OnInit {
     }
   ];
 
-  priceList: PricePerDate[] = [{
-    date: "01-11-2020",
-    price: 8
-  }];
+  priceList: PricePerDate[] = [];
+  hourOccList: HourPrice[] = [];
   
   ngOnInit(): void {
-    if(sessionStorage)
 
+    for(let i=0; i<24;i++){
+      this.hourOccList.push(null);
+    }
 
     var currentDate = new Date();
     this.selectedYear = currentDate.getUTCFullYear();
     this.selectedMonth = currentDate.getUTCMonth() +1;
-    console.log(this.bookingdate);
+    this.selectedDate = ((currentDate.getDate() < 10) ? '0' + currentDate.getDate().toString() : currentDate.getDate().toString())+"-"+this.selectedMonth+"-"+this.selectedYear;
     this.days = this.daysInThisMonth(this.selectedMonth, this.selectedYear);
     this.findMonthPrices();
+
+    this.bookgreenzoneservice.getNoOfPersonsPerDayAndStartTime(this.selectedDate).then((data) => {
+      const result= data['occupancyByTime'].recordsets[0];
+      this.hourOccList = this.hourOccList.map((occ,i) => {
+        if(result.includes(r => r.startTime === i)){
+           return result.find(r => r.startTime === i)
+        }
+        return null;
+      });
+    }).catch((err: any) => {
+      console.log(err);
+    });
 
     this.bookgreenzoneservice.getGZIds().then((data) => {
       this.GZIds = data['GZIds'].recordset;
@@ -95,11 +107,6 @@ export class BookgreenzoneComponent implements OnInit {
     });
   }
 
-  public selectedADateFomCalender(){
-    console.log(this.bookingdate);
-
-  }
-
   public daysInThisMonth(month ?:number, year ?:number) {
     return new Date(year, month, 0).getDate();
   }
@@ -111,9 +118,44 @@ export class BookgreenzoneComponent implements OnInit {
     this.findMonthPrices();
   }
 
+  public daySelected(event){
+    console.log("event");
+    let month = event.getUTCMonth() +1;
+    this.selectedDate = ((event.getDate() < 10) ? '0' + event.getDate().toString() : event.getDate().toString()) +"-"+ month +"-"+ event.getUTCFullYear();
+    console.log(this.selectedDate );
+    this.bookgreenzoneservice.getNoOfPersonsPerDayAndStartTime(this.selectedDate).then(async(data) => {
+      const result= data['occupancyByTime'].recordsets[0];
+      for(let i =0 ;i<this.hourOccList.length;i++){
+        if(result.find(r => r.startTime === i)){
+          const selectedOcc = result.find(r => r.startTime === i);
+          const occPcy= await this.getPriceByOccupancy(selectedOcc.startTime, selectedOcc.occupancyByTime);
+          this.hourOccList[i] = {
+            startTime:selectedOcc.startTime,
+            occupancyByTime:selectedOcc.occupancyByTime,
+            price: occPcy['price']
+          }
+        }
+      }
+      this.hourOccList = [...this.hourOccList];
+    }).catch((err: any) => {
+      console.log(err);
+    });
+  }
+
+  public async getPriceByOccupancy(startTime, occupancy){
+    try{
+      return await this.bookgreenzoneservice.getPricePerHourOfSelectedZone(30, 1, 0, startTime, 19, occupancy);
+    }catch(e){
+      return null;
+    }
+    
+  }
+
+
+
   async findMonthPrices(){
-    let persons =0;
-    console.log("occupancy");
+    this.priceList = [];
+   let persons =0;
     try{
       for (let i = 1; i <= this.days; i++) {
         let day = ((i < 10) ? '0' + i.toString() : i.toString()) +"-"+ this.selectedMonth +"-"+ this.selectedYear;
@@ -182,7 +224,6 @@ export class BookgreenzoneComponent implements OnInit {
     }
     if(this.endTime != 0 && this.endTime != undefined){
       this.bookgreenzoneservice.getPricePerHourOfSelectedZone(30, gz, rz, this.startTime, this.endTime, occupancy).then((data) => {
-        console.log(data['price']);
         this.price =  Math.round(data['price']);
         if(this.price == 0){
           this.price =7
@@ -196,8 +237,8 @@ export class BookgreenzoneComponent implements OnInit {
     }
   }
 
-  async fillCalender(curr_date : any){
-    /*let day:number = curr_date.day;
+  public fillCalender(curr_date : any){
+    let day:number = curr_date.day;
     let currentDay = ((day < 10) ? '0' + day.toString() : day.toString()) + "-" + curr_date.month + "-" + curr_date.year;
     let list = this.priceList;
     if(this.priceList){
@@ -215,55 +256,30 @@ export class BookgreenzoneComponent implements OnInit {
       }
     }else{
       return "inherit";
-    }*/
-    return "yellow";
+    }
   }
 
 
-  public fillTimeColor(hour : any){
-    /*console.log(curr_date);
-    const occDetails: PricePerDate = this.priceList.find(occ => occ.date === curr_date.day);
-    if(occDetails){
-      const occupancycolor: OccupancyColor = this.occupancycolors.find(occColor => {
-        if(occDetails.price >= occColor.occupancy_min && occDetails.price <= occColor.occupancy_max){
-          return true;
-        }
-      }) 
-      if(occupancycolor){
-        return occupancycolor.color;
+  public fillTimeColor(price : any){
+    const priceColor: PriceColor = this.pricecolors.find(pcolor => {
+      if(price >= pcolor.price_min && price <= pcolor.price_max){
+        return true;
       }
+    }) 
+    if(priceColor){
+      return priceColor.color;
     }
-    return "inherit";*/
     return "green";
-  }
-
-  public fillHour(curr_date : any){
-    /*console.log(curr_date);
-    const occDetails: PricePerDate = this.priceList.find(occ => occ.date === curr_date.day);
-    if(occDetails){
-      const occupancycolor: OccupancyColor = this.occupancycolors.find(occColor => {
-        if(occDetails.price >= occColor.occupancy_min && occDetails.price <= occColor.occupancy_max){
-          return true;
-        }
-      }) 
-      if(occupancycolor){
-        return occupancycolor.color;
-      }
-    }
-    return "inherit";*/
   }
 
 
   public bookZone(){
-    console.log(this.GZIds);
-    console.log(this.RZIds);
     let randomZoneId: number;
     if(this.selectedZone === 'GZ'){
       randomZoneId = this.GZIds[Math.floor(Math.random() * this.GZIds.length)];
     }else{
       randomZoneId = this.RZIds[Math.random() * this.RZIds.length];
     } 
-    console.log(randomZoneId['zoneId']);
 
 
     this.userId = parseInt(sessionStorage.getItem('userId'));
@@ -273,6 +289,7 @@ export class BookgreenzoneComponent implements OnInit {
       console.log(err);
     });
   }
+
 }
 
 interface PricePerDate {
@@ -287,6 +304,7 @@ interface PriceColor {
 }
 
 interface HourPrice {
-  hour: number,
-  price: number
+  startTime: number,
+  occupancyByTime: number,
+  price: number;
 }
