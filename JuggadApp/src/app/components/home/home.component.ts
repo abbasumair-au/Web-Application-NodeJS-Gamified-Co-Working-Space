@@ -19,10 +19,14 @@ export class HomeComponent implements OnInit {
   todayRoom = "";
   todayBookingId = 0;
 
+  todayBooking = "";
+
   tomorrowStartTime = "";
   tomorrowEndTime = "";
   tomorrowRoom = "";
   tomorrowBookingId = 0;
+
+  tomorrowBooking = "";
 
 
 
@@ -42,17 +46,27 @@ export class HomeComponent implements OnInit {
       dateTomorrow.setDate(dateTomorrow.getDate() + 1);
       const tomorrow = ((dateTomorrow.getDate() < 10) ? '0' + dateTomorrow.getDate().toString() : dateTomorrow.getDate().toString())+"-"+dateTomorrow.getMonth()+"-"+dateTomorrow.getFullYear();
 
-      this.homeservice.findTodayAndTomorrowBooking("08-11-2020", "09-11-2020", sessionStorage.getItem('userId')).then((booking) => {
+      this.homeservice.findTodayAndTomorrowBooking(today, tomorrow, sessionStorage.getItem('userId')).then((booking) => {
         let bookings = booking['currentBooking'].recordsets[0];
-        this.todayStartTime = bookings[0].StartTime;
-        this.todayEndTime = bookings[0].EndTime;
-        this.todayRoom = bookings[0].RoomNo;
-        this.todayBookingId = bookings[0].BID;
+        if(bookings[0]){
+          this.todayStartTime = bookings[0].StartTime;
+          this.todayEndTime = bookings[0].EndTime;
+          this.todayRoom = bookings[0].RoomNo;
+          this.todayBookingId = bookings[0].BID;
+          this.todayBooking = this.todayStartTime+" to "+this.todayEndTime+" - "+this.todayRoom;
+        }else{
+          this.todayBooking = "No zones booked for today. Go to booking tab for new booking";
+        }
 
-        this.tomorrowStartTime = bookings[1].StartTime;
-        this.tomorrowEndTime = bookings[1].EndTime;
-        this.tomorrowRoom = bookings[1].RoomNo;
-        this.tomorrowBookingId = bookings[1].BID;
+        if(bookings[1]){
+          this.tomorrowStartTime = bookings[1].StartTime;
+          this.tomorrowEndTime = bookings[1].EndTime;
+          this.tomorrowRoom = bookings[1].RoomNo;
+          this.tomorrowBookingId = bookings[1].BID;
+          this.tomorrowBooking = this.tomorrowStartTime+" to "+this.tomorrowEndTime+" - "+this.tomorrowRoom;
+        }else{
+          this.tomorrowBooking = "No zones booked for tomorrow. Go to booking tab for new booking";
+        }
 
       }).catch((err: any) => {
         console.log(err);
