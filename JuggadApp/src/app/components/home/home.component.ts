@@ -14,6 +14,18 @@ export class HomeComponent implements OnInit {
   nameOfUser = "";
   points:number;
 
+  todayStartTime = "";
+  todayEndTime = "";
+  todayRoom = "";
+  todayBookingId = 0;
+
+  tomorrowStartTime = "";
+  tomorrowEndTime = "";
+  tomorrowRoom = "";
+  tomorrowBookingId = 0;
+
+
+
   ngOnInit(): void {
     //sessionStorage.getItem('userId');
     if(sessionStorage.getItem('name') && sessionStorage.getItem('userId')){
@@ -30,8 +42,18 @@ export class HomeComponent implements OnInit {
       dateTomorrow.setDate(dateTomorrow.getDate() + 1);
       const tomorrow = ((dateTomorrow.getDate() < 10) ? '0' + dateTomorrow.getDate().toString() : dateTomorrow.getDate().toString())+"-"+dateTomorrow.getMonth()+"-"+dateTomorrow.getFullYear();
 
-      this.homeservice.findTodayAndTomorrowBooking(today, tomorrow, sessionStorage.getItem('userId')).then((points) => {
-        this.points = points['point'].recordset[0].Total;
+      this.homeservice.findTodayAndTomorrowBooking("08-11-2020", "09-11-2020", sessionStorage.getItem('userId')).then((booking) => {
+        let bookings = booking['currentBooking'].recordsets[0];
+        this.todayStartTime = bookings[0].StartTime;
+        this.todayEndTime = bookings[0].EndTime;
+        this.todayRoom = bookings[0].RoomNo;
+        this.todayBookingId = bookings[0].BID;
+
+        this.tomorrowStartTime = bookings[1].StartTime;
+        this.tomorrowEndTime = bookings[1].EndTime;
+        this.tomorrowRoom = bookings[1].RoomNo;
+        this.tomorrowBookingId = bookings[1].BID;
+
       }).catch((err: any) => {
         console.log(err);
       });

@@ -241,9 +241,10 @@ app.get('/ViewTodayBooking', function(req, res){
   let tomorrow = req.query.tomorrow;
   let uId = parseInt(req.query.uId);
 
-  let sql_ViewTodayBooking = "select b.BID,b.ZID,b.Date, b.StartTime, b.EndTime, z.Zone, z.RoomNo from tblBookings b, tblZones z where b.ZID = z.ZID and b.UID = '"+uId+"' and  b.Date in('"+today+"','"+tomorrow+"')";
+  let sql_ViewTodayBooking = "select b.BID ,b.ZID,b.Date, b.StartTime, b.EndTime, z.Zone, z.RoomNo from tblBookings b, tblZones z where b.ZID = z.ZID and b.UID = '"+uId+"' and  b.Date in('"+today+"','"+tomorrow+"')";
   let ViewTodayBooking = function(err, result){
     if(err) throw err;
+    console.log(result)
     res.json({currentBooking: result});
   };
   mssql.query(sql_ViewTodayBooking, ViewTodayBooking);
