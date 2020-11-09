@@ -150,7 +150,11 @@ app.get("/changeGreenHourPrice", function (req, res) {
 
   let PriceChangeQuery = function (err, result) {
     if (err) throw err;
+    try{
     shell.exec('/home/ubuntu/flaskapp/RefreshSimulationModel.sh');
+    }catch(err){
+      console.log(err);
+    }
     res.json({ result: result }); //need to be removed when api comes
   };
   mssql.query(sql_PriceChangeQuery, PriceChangeQuery);
@@ -173,7 +177,11 @@ app.get("/changeGZPrice", function (req, res) {
   }
   let PriceChangeQuery = function (err, result) {
     if (err) throw err;
-    shell.exec('/home/ubuntu/flaskapp/RefreshSimulationModel.sh');
+    try{
+      shell.exec('/home/ubuntu/flaskapp/RefreshSimulationModel.sh');
+      }catch(err){
+        console.log(err);
+      }
     res.json({ result: result }); //need to be removed when api comes
   };
   mssql.query(sql_PriceChangeQuery, PriceChangeQuery);
@@ -199,7 +207,11 @@ app.get("/changeOccupancyPrice", function (req, res) {
   }
   let PriceChangeQuery = function (err, result) {
     if (err) throw err;
-    shell.exec('/home/ubuntu/flaskapp/RefreshSimulationModel.sh');
+    try{
+      shell.exec('/home/ubuntu/flaskapp/RefreshSimulationModel.sh');
+      }catch(err){
+        console.log(err);
+      }
     res.json({ result: result }); //need to be removed when api comes
   };
   mssql.query(sql_PriceChangeQuery, PriceChangeQuery);
