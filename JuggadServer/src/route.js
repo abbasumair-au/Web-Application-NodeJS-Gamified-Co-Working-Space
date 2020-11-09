@@ -10,7 +10,7 @@ module.exports = (app, mssql, shell) => {
     res.sendFile(__dirname + "/views" + "/login.html");
   });
 
-  app.post("/api/login", function (req, res) {
+  app.post("/login", function (req, res) {
     let username = req.body.username;
     let password = req.body.password;
 
@@ -30,7 +30,7 @@ module.exports = (app, mssql, shell) => {
   });
 
   // registration for a new user
-  app.post("/api/registration", function (req, res) {
+  app.post("/registration", function (req, res) {
     let name = req.body.name;
     let password = req.body.password;
     let email = req.body.email;
@@ -54,7 +54,7 @@ module.exports = (app, mssql, shell) => {
   });
 
 
-  app.get("/api/getGZIds", function (req, res) {
+  app.get("/getGZIds", function (req, res) {
 
     let sql_greenZoneIds =
       "SELECT z.ZID AS zoneId FROM tblZones z WHERE z.Zone = 'GZ';";
@@ -68,7 +68,7 @@ module.exports = (app, mssql, shell) => {
     mssql.query(sql_greenZoneIds, callBackFunctionLogin);
   });
 
-  app.get("/api/getRZIds", function (req, res) {
+  app.get("/getRZIds", function (req, res) {
 
     let sql_regZoneIds =
       "SELECT z.ZID AS zoneId FROM tblZones z WHERE z.Zone = 'RZ';";
@@ -82,7 +82,7 @@ module.exports = (app, mssql, shell) => {
     mssql.query(sql_regZoneIds, callBackFunctionLogin);
   });
 
-  app.post("/api/saveBooking", function (req, res) {
+  app.post("/saveBooking", function (req, res) {
     
     console.log("inside savebooking route");
     console.log()
@@ -112,7 +112,7 @@ module.exports = (app, mssql, shell) => {
     mssql.query(sql_nb, NewBookingInsert);
   });
 
-  app.get('/api/userTrefels', function (req, res) {
+  app.get('/userTrefels', function (req, res) {
     let UID = req.query.UID;
 
     let sql_trefels = "SELECT TOP 1 Total FROM tblCredits WHERE UID = '"+UID+"' ORDER BY CID DESC ";
@@ -124,7 +124,7 @@ module.exports = (app, mssql, shell) => {
     mssql.query(sql_trefels, CurrentTrefels);
 });
 
-app.get("/api/changeGreenHourPrice", function (req, res) {
+app.get("/changeGreenHourPrice", function (req, res) {
   console.log("inside GH");
   let dayPart = req.query.dayPart;
   let action = req.query.action;
@@ -156,7 +156,7 @@ app.get("/api/changeGreenHourPrice", function (req, res) {
   mssql.query(sql_PriceChangeQuery, PriceChangeQuery);
 });
 
-app.get("/api/changeGZPrice", function (req, res) {
+app.get("/changeGZPrice", function (req, res) {
   console.log("inside GZ");
   let zone = req.query.zone;
   let action = req.query.action;
@@ -179,7 +179,7 @@ app.get("/api/changeGZPrice", function (req, res) {
   mssql.query(sql_PriceChangeQuery, PriceChangeQuery);
 });
 
-app.get("/api/changeOccupancyPrice", function (req, res) {
+app.get("/changeOccupancyPrice", function (req, res) {
   let occ = req.query.occ;
   let action = req.query.action;
   let sql_PriceChangeQuery = "";
@@ -205,7 +205,7 @@ app.get("/api/changeOccupancyPrice", function (req, res) {
   mssql.query(sql_PriceChangeQuery, PriceChangeQuery);
 });
 
-app.get("/api/getNoOfPersonsPerDay", function (req, res) {
+app.get("/getNoOfPersonsPerDay", function (req, res) {
   let date = req.query.date;
   sql_persons = "select sum((EndTime-StartTime)*Persons) AS noOfPersons from tblbookings where date like '"+date+"';";
   let NoOfPersonsPerDay = function (err, persons) {
@@ -215,7 +215,7 @@ app.get("/api/getNoOfPersonsPerDay", function (req, res) {
   mssql.query(sql_persons, NoOfPersonsPerDay);
 });
 
-app.get("/api/getNoOfPersonsPerDayAndStartTime", function (req, res) {
+app.get("/getNoOfPersonsPerDayAndStartTime", function (req, res) {
   console.log('inside getNoOfPersonsPerDayAndStartTime');
   let date  = req.query.date;
   let sql_persons = "select startTime AS startTime, (sum((EndTime-StartTime)*Persons)*100)/3600 AS dfhgthjk from tblbookings where date LIKE '"+date+"' GROUP BY startTime;";
@@ -230,12 +230,12 @@ app.get("/api/getNoOfPersonsPerDayAndStartTime", function (req, res) {
 });
 
 
-app.get("/api/updateBookingPriceModel", function (req, res) {
+app.get("/updateBookingPriceModel", function (req, res) {
   shell.exec('/home/ubuntu/flaskapp/RefreshMLBookingPriceModel.sh');
   res.json({status: "updated"});
 });
 
-app.get('/api/ViewTodayBooking', function(req, res){
+app.get('/ViewTodayBooking', function(req, res){
   
   let today =  req.query.today;
   let tomorrow = req.query.tomorrow;

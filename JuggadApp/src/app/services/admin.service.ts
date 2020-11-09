@@ -12,21 +12,21 @@ export class AdminService {
     let params = new HttpParams();
     params = params.append('dayPart',dayPart);
     params = params.append('action',action);
-    return this.http.get("http://52.91.17.178:5011/api/changeGreenHourPrice", {params: params}).toPromise();
+    return this.http.get("http://52.91.17.178:5011/changeGreenHourPrice", {params: params}).toPromise();
   }
 
   public changeGZPrice(zone, action){
     let params = new HttpParams();
     params = params.append('zone',zone);
     params = params.append('action',action);
-    return this.http.get("http://52.91.17.178:5011/api/changeGZPrice", {params: params}).toPromise();
+    return this.http.get("http://52.91.17.178:5011/changeGZPrice", {params: params}).toPromise();
   }
 
   public changeOccupancyPrice(occ, action){
     let params = new HttpParams();
     params = params.append('occ',occ);
     params = params.append('action',action);
-    return this.http.get("http://52.91.17.178:5011/api/changeOccupancyPrice", {params: params}).toPromise();
+    return this.http.get("http://52.91.17.178:5011/changeOccupancyPrice", {params: params}).toPromise();
   }
 
   public simulateBooking(advdays, gz, rz, startTime, endTime,occupancy){
@@ -54,7 +54,7 @@ export class AdminService {
 
 
   public updateBookingPriceModel(){
-    return this.http.get("http://52.91.17.178:5011/api/updateBookingPriceModel").toPromise();
+    return this.http.get("http://52.91.17.178:5011/updateBookingPriceModel").toPromise();
   }
 
 }
