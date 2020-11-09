@@ -218,7 +218,7 @@ app.get("/getNoOfPersonsPerDay", function (req, res) {
 app.get("/getNoOfPersonsPerDayAndStartTime", function (req, res) {
   console.log('inside getNoOfPersonsPerDayAndStartTime');
   let date  = req.query.date;
-  let sql_persons = "select startTime AS startTime, (sum((EndTime-StartTime)*Persons)*100)/3600 AS dfhgthjk from tblbookings where date LIKE '"+date+"' GROUP BY startTime;";
+  let sql_persons = "select startTime AS startTime, (sum((EndTime-StartTime)*Persons)*100)/3600 AS occupancyByTime from tblbookings where date LIKE '"+date+"' GROUP BY startTime;";
   let NoOfPersonsPerDay = function (err, occupancyByTime) {
     if (err) throw err;
     console.log(occupancyByTime.recordsets[0]);

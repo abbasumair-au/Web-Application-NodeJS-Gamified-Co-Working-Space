@@ -57,12 +57,12 @@ export class BookgreenzoneService {
   async getNoOfPersonsPerDay(date){
     let params = new HttpParams();
     params = params.append('date',date);
-    return this.http.get("http://52.91.17.178:5011/getNoOfPersonsPerDay", {params: params}).toPromise();
+    return this.http.get("http://localhost:5011/getNoOfPersonsPerDay", {params: params}).toPromise();
   }
   public getNoOfPersonsPerDayAndStartTime(date){
     let params = new HttpParams();
     params = params.append('date',date);
-    return this.http.get("http://52.91.17.178:5011/getNoOfPersonsPerDayAndStartTime", {params: params}).toPromise();
+    return this.http.get("http://localhost:5011/getNoOfPersonsPerDayAndStartTime", {params: params}).toPromise();
   }
 
 }

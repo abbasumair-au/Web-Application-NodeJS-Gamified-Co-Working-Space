@@ -128,6 +128,7 @@ export class BookgreenzoneComponent implements OnInit {
     this.selectedDate = ((event.getDate() < 10) ? '0' + event.getDate().toString() : event.getDate().toString()) +"-"+ month +"-"+ event.getUTCFullYear();
     console.log(this.selectedDate );
     this.bookgreenzoneservice.getNoOfPersonsPerDayAndStartTime(this.selectedDate).then(async(data) => {
+      console.log(data['occupancyByTime'].recordsets[0]);
       const result= data['occupancyByTime'].recordsets[0];
       for(let i =0 ;i<this.hourOccList.length;i++){
         if(result.find(r => r.startTime === i)){
