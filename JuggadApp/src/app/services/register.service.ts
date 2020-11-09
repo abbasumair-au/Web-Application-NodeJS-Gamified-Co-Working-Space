@@ -11,7 +11,7 @@ export class RegisterService {
   public registerUser(name :string, email :string, mobile :string, password :string) {
     //console.log(username+"-"+password);
     console.log("data in service: "+name+":"+email+":"+mobile+":"+password);
-    return this.http.post("http://52.91.17.178:5011/registration", {
+    return this.http.post("http://52.91.17.178:5011/api/registration", {
       name : name,
       email : email,
       mobile : mobile,
