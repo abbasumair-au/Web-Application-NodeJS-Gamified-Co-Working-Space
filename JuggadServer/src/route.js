@@ -83,9 +83,6 @@ module.exports = (app, mssql, shell) => {
   });
 
   app.post("/saveBooking", function (req, res) {
-    
-    console.log("inside savebooking route");
-    console.log()
     let zid = req.body.zoneId;
     let UID = req.body.UID;
     let date =req.body.date;
@@ -95,7 +92,6 @@ module.exports = (app, mssql, shell) => {
     let persons = 1;
     let action = "Act";
     let bookingPoints = 10;
-    console.log(zid+":"+UID+":"+date+":"+starttime+":"+endtime+":"+cost)
    
     let sql_nb ="INSERT INTO tblBookings (UID,ZID,Date,StartTime,EndTime,cost,Persons,ActOrMoved) VALUES ('" +UID +
     "','" +zid +"','" +date +"','" +starttime+"','" +endtime+"','" +cost +"','" +persons +"','" +action +"')";
@@ -125,7 +121,6 @@ module.exports = (app, mssql, shell) => {
 });
 
 app.get("/changeGreenHourPrice", function (req, res) {
-  console.log("inside GH");
   let dayPart = req.query.dayPart;
   let action = req.query.action;
   let sql_PriceChangeQuery = "";
@@ -161,7 +156,6 @@ app.get("/changeGreenHourPrice", function (req, res) {
 });
 
 app.get("/changeGZPrice", function (req, res) {
-  console.log("inside GZ");
   let zone = req.query.zone;
   let action = req.query.action;
   let sql_PriceChangeQuery = "";
@@ -228,12 +222,10 @@ app.get("/getNoOfPersonsPerDay", function (req, res) {
 });
 
 app.get("/getNoOfPersonsPerDayAndStartTime", function (req, res) {
-  console.log('inside getNoOfPersonsPerDayAndStartTime');
   let date  = req.query.date;
   let sql_persons = "select startTime AS startTime, (sum((EndTime-StartTime)*Persons)*100)/3600 AS occupancyByTime from tblbookings where date LIKE '"+date+"' GROUP BY startTime;";
   let NoOfPersonsPerDay = function (err, occupancyByTime) {
     if (err) throw err;
-    console.log(occupancyByTime.recordsets[0]);
     res.json({ occupancyByTime: occupancyByTime }); //need to be removed when api comes
   };
   mssql.query(sql_persons, NoOfPersonsPerDay);
@@ -256,12 +248,32 @@ app.get('/ViewTodayBooking', function(req, res){
   let sql_ViewTodayBooking = "select b.BID ,b.ZID,b.Date, b.StartTime, b.EndTime, z.Zone, z.RoomNo from tblBookings b, tblZones z where b.ZID = z.ZID and b.UID = '"+uId+"' and  b.Date in('"+today+"','"+tomorrow+"')";
   let ViewTodayBooking = function(err, result){
     if(err) throw err;
-    console.log(result)
     res.json({currentBooking: result});
   };
   mssql.query(sql_ViewTodayBooking, ViewTodayBooking);
 });
 
+app.get('/NotificationsDetails', function(req,res){
+  let UID = parseInt(req.query.UID);
+  let sql_Notifications = "select n.text from tblNotification n where UID = '"+UID+"' ORDER BY nid DESC";
+  let NotificationsDetails = function(err,result){
+    if(err) throw err;
+    console.log(result);
+    res.json({NotificationsDetails: result});
+  };
+
+  mssql.query(sql_Notifications, NotificationsDetails);
+})
+
+app.get('/getAllNotifications', function(req,res){
+  let sql_Notifications = "select n.text from tblNotification n";
+  let NotificationsDetails = function(err,result){
+    if(err) throw err;
+    console.log(result);
+    res.json({allNotifications: result});
+  };
+  mssql.query(sql_Notifications, NotificationsDetails);
+})
 
 
 };

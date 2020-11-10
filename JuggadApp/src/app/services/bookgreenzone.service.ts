@@ -22,11 +22,11 @@ export class BookgreenzoneService {
   public checkOccupancy(zoneId){
     let params = new HttpParams();
    params = params.append('zoneId',zoneId);
-    return this.http.post("http://52.91.17.178:5011/saveBooking", {params: params}).toPromise();
+    return this.http.post("http://localhost:5011/saveBooking", {params: params}).toPromise();
   }
 
   public saveBooking(userId, zoneId, bookingDate, startTime, endTime, cost){
-    return this.http.post("http://52.91.17.178:5011/saveBooking", {
+    return this.http.post("http://localhost:5011/saveBooking", {
       UID : userId,
       zoneId : zoneId,
       date : bookingDate,
@@ -37,10 +37,10 @@ export class BookgreenzoneService {
   }
 
   public getGZIds(){
-    return this.http.get("http://52.91.17.178:5011/getGZIds").toPromise();
+    return this.http.get("http://localhost:5011/getGZIds").toPromise();
   }
   public getRZIds(){
-    return this.http.get("http://52.91.17.178:5011/getRZIds").toPromise();
+    return this.http.get("http://localhost:5011/getRZIds").toPromise();
   }
 
   public fillCalender(advdays, gz, rz, startTime, endTime,occupancy){

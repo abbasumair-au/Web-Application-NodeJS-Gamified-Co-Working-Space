@@ -1,40 +1,22 @@
 <div class="container" style="margin-top: 50px">
     <!-- <div class="alert alert-success" role="alert"> -->
-      <div class="row">
+      <!--<div class="row">
         <div class="col-sm-6">
           <div class="card-body">
             <h5 class="card-title" style="color: green"><img src="assets/green-icon.jpg" class="img-fluid" alt="Responsive image" width="50px" height="20px"> Welcome Umair your target is 890 <img src="assets/green-env.jpg" class="img-fluid" alt="Responsive image" width="30px" height="10px" style="border-radius: 50%"></h5>
           </div>
         </div>
-      </div>
+      </div> -->
   
-     <div class="row" style="margin-top: 20px">
-      <div class="col-sm-6">
-        <div class="alert alert-success" role="alert">
-          <div class="card-body">
-            <h5 style="font-weight: bold">Your friend Umair has invited you for #Make2020 challenge</h5>
-          </div>
-        </div>
-      </div>
-  </div>
-  
-    <div class="row" style="margin-top: 20px">
-      <div class="col-sm-6">
-        <div class="alert alert-success" role="alert">
-          <div class="card-body">
-            <h5 style="font-weight: bold">You are just 300 trefles away from your goal this month</h5>
-          </div>
-        </div>
-      </div>
-  </div>
-  
+    <div *ngFor = "let msg of notifications; let i=index" >
       <div class="row" style="margin-top: 20px">
-      <div class="col-sm-6">
-        <div class="alert alert-success" role="alert">
-          <div class="card-body">
-            <h5 style="font-weight: bold">New goodies added to Green Store might interest you</h5>
+        <div class="col-sm-6">
+          <div class="alert alert-success" role="alert">
+            <div class="card-body">
+              <h5 style="font-weight: bold">{{msg.text}}</h5>
+            </div>
           </div>
         </div>
       </div>
-  </div>
+    </div>
 </div>
