@@ -146,7 +146,7 @@ app.get("/changeGreenHourPrice", function (req, res) {
   let PriceChangeQuery = function (err, result) {
     if (err) throw err;
     try{
-    shell.exec('/home/ubuntu/flaskapp/RefreshSimulationModel.sh');
+    shell.exec('/home/ubuntu/flaskapp/test.sh');
     }catch(err){
       console.log(err);
     }
@@ -172,7 +172,7 @@ app.get("/changeGZPrice", function (req, res) {
   let PriceChangeQuery = function (err, result) {
     if (err) throw err;
     try{
-      shell.exec('/home/ubuntu/flaskapp/RefreshSimulationModel.sh');
+      shell.exec('/home/ubuntu/flaskapp/test.sh');
       }catch(err){
         console.log(err);
       }
@@ -202,7 +202,7 @@ app.get("/changeOccupancyPrice", function (req, res) {
   let PriceChangeQuery = function (err, result) {
     if (err) throw err;
     try{
-      shell.exec('/home/ubuntu/flaskapp/RefreshSimulationModel.sh');
+      shell.exec('/home/ubuntu/flaskapp/test.sh');
       }catch(err){
         console.log(err);
       }
