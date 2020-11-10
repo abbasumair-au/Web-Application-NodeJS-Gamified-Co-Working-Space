@@ -145,11 +145,6 @@ app.get("/changeGreenHourPrice", function (req, res) {
 
   let PriceChangeQuery = function (err, result) {
     if (err) throw err;
-    try{
-    shell.exec('cd /home/ubuntu/flaskapp sudo ./RefreshSimulationModel.sh');
-    }catch(err){
-      console.log(err);
-    }
     res.json({ result: result }); //need to be removed when api comes
   };
   mssql.query(sql_PriceChangeQuery, PriceChangeQuery);
@@ -171,12 +166,7 @@ app.get("/changeGZPrice", function (req, res) {
   }
   let PriceChangeQuery = function (err, result) {
     if (err) throw err;
-    try{
-      shell.exec('cd /home/ubuntu/flaskapp sudo ./RefreshSimulationModel.sh');
-      }catch(err){
-        console.log(err);
-      }
-    res.json({ result: result }); //need to be removed when api comes
+    res.json({result:result});
   };
   mssql.query(sql_PriceChangeQuery, PriceChangeQuery);
 });
@@ -201,14 +191,13 @@ app.get("/changeOccupancyPrice", function (req, res) {
   }
   let PriceChangeQuery = function (err, result) {
     if (err) throw err;
-    try{
-      shell.exec('cd /home/ubuntu/flaskapp sudo ./RefreshSimulationModel.sh');
-      }catch(err){
-        console.log(err);
-      }
     res.json({ result: result }); //need to be removed when api comes
   };
   mssql.query(sql_PriceChangeQuery, PriceChangeQuery);
+});
+
+app.get("/refreshSimulationModel", function (req, res) {
+  shell.exec('sudo /home/ubuntu/flaskapp/RefreshSimulationModel.sh');
 });
 
 app.get("/getNoOfPersonsPerDay", function (req, res) {
