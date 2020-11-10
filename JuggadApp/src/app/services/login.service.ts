@@ -11,7 +11,7 @@ export class LoginService {
    }
   
   public login(username :string, password :string) {
-    return this.http.post("http://localhost:5011/login", {
+    return this.http.post("http://52.91.17.178:5011/login", {
       username : username,
       password : password
     }).toPromise();

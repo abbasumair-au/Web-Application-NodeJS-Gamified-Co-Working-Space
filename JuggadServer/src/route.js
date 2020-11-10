@@ -1,5 +1,5 @@
 module.exports = (app, mssql, shell) => {
-  const { exec } = require("child_process");
+  //const { exec } = require("child_process");
   app.get("/", function (req, res) {
     // send the main (and unique) page
     res.setHeader("Content-Type", "text/html");
@@ -142,11 +142,11 @@ app.get("/changeGreenHourPrice", function (req, res) {
   let PriceChangeQuery = function (err, result) {
     if (err) throw err;
     try{
-    shell.exec('cd /home/ubuntu/flaskapp sudo ./RefreshSimulationModel.sh');
+    shell.exec('sudo /home/ubuntu/flaskapp/RefreshSimulationModel.sh');
+    res.json({ result: result });
     }catch(err){
       console.log(err);
     }
-    res.json({ result: result }); //need to be removed when api comes
   };
   mssql.query(sql_PriceChangeQuery, PriceChangeQuery);
 });
@@ -167,16 +167,12 @@ app.get("/changeGZPrice", function (req, res) {
   }
   let PriceChangeQuery = function (err, result) {
     if (err) throw err;
-    exec("sudo /home/ubuntu/flaskapp/RefreshSimulationModel.sh", (error, stdout, stderr) => {
+    const execFile = require('child_process').execFile;
+    const child = execFile('sudo', ['/home/pi/Desktop/fm_transmitter/bin/Release/fm_transmitter', 'high_dash.wav', '103.50'], (error, stdout, stderr) => {
       if (error) {
-          console.log(`error: ${error.message}`);
-          return;
+        throw error;
       }
-      if (stderr) {
-          console.log(`stderr: ${stderr}`);
-          return;
-      }
-      console.log(`stdout: ${stdout}`);
+      console.log(stdout);
     });
   };
   mssql.query(sql_PriceChangeQuery, PriceChangeQuery);
@@ -203,11 +199,11 @@ app.get("/changeOccupancyPrice", function (req, res) {
   let PriceChangeQuery = function (err, result) {
     if (err) throw err;
     try{
-      shell.exec('cd /home/ubuntu/flaskapp sudo ./RefreshSimulationModel.sh');
+      shell.exec('sudo /home/ubuntu/flaskapp/RefreshSimulationModel.sh');
+      res.json({ result: result });
       }catch(err){
         console.log(err);
       }
-    res.json({ result: result }); //need to be removed when api comes
   };
   mssql.query(sql_PriceChangeQuery, PriceChangeQuery);
 });
