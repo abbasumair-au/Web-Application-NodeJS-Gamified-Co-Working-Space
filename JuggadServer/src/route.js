@@ -1,4 +1,5 @@
 module.exports = (app, mssql, shell) => {
+  const { exec } = require("child_process");
   app.get("/", function (req, res) {
     // send the main (and unique) page
     res.setHeader("Content-Type", "text/html");
@@ -166,12 +167,17 @@ app.get("/changeGZPrice", function (req, res) {
   }
   let PriceChangeQuery = function (err, result) {
     if (err) throw err;
-    try{
-      shell.exec('sudo /home/ubuntu/flaskapp/RefreshSimulationModel.sh');
-      res.json("done");
-    }catch(err){
-      res.send(err).status(400);
-    }
+    exec("sudo /home/ubuntu/flaskapp/RefreshSimulationModel.sh", (error, stdout, stderr) => {
+      if (error) {
+          console.log(`error: ${error.message}`);
+          return;
+      }
+      if (stderr) {
+          console.log(`stderr: ${stderr}`);
+          return;
+      }
+      console.log(`stdout: ${stdout}`);
+    });
   };
   mssql.query(sql_PriceChangeQuery, PriceChangeQuery);
 });
