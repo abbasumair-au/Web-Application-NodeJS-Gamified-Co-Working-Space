@@ -167,13 +167,12 @@ app.get("/changeGZPrice", function (req, res) {
   }
   let PriceChangeQuery = function (err, result) {
     if (err) throw err;
-    const execFile = require('child_process').execFile;
-    const child = execFile('sudo', ['/home/pi/Desktop/fm_transmitter/bin/Release/fm_transmitter', 'high_dash.wav', '103.50'], (error, stdout, stderr) => {
-      if (error) {
-        throw error;
+    try{
+      shell.exec('sudo /home/ubuntu/flaskapp/RefreshSimulationModel.sh');
+      res.json({ result: result });
+      }catch(err){
+        console.log(err);
       }
-      console.log(stdout);
-    });
   };
   mssql.query(sql_PriceChangeQuery, PriceChangeQuery);
 });
