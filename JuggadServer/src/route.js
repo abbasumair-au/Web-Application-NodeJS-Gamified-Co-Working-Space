@@ -146,7 +146,7 @@ app.get("/changeGreenHourPrice", function (req, res) {
   let PriceChangeQuery = function (err, result) {
     if (err) throw err;
     try{
-    shell.exec('/home/ubuntu/flaskapp/RefreshSimulationModel.sh');
+    shell.exec('sudo /home/ubuntu/flaskapp/RefreshSimulationModel.sh');
     }catch(err){
       console.log(err);
     }
@@ -172,7 +172,7 @@ app.get("/changeGZPrice", function (req, res) {
   let PriceChangeQuery = function (err, result) {
     if (err) throw err;
     try{
-      shell.exec('/home/ubuntu/flaskapp/RefreshSimulationModel.sh');
+      shell.exec('sudo /home/ubuntu/flaskapp/RefreshSimulationModel.sh');
       }catch(err){
         console.log(err);
       }
@@ -202,7 +202,7 @@ app.get("/changeOccupancyPrice", function (req, res) {
   let PriceChangeQuery = function (err, result) {
     if (err) throw err;
     try{
-      shell.exec('/home/ubuntu/flaskapp/RefreshSimulationModel.sh');
+      shell.exec('sudo /home/ubuntu/flaskapp/RefreshSimulationModel.sh');
       }catch(err){
         console.log(err);
       }
@@ -235,7 +235,7 @@ app.get("/getNoOfPersonsPerDayAndStartTime", function (req, res) {
 
 
 app.get("/updateBookingPriceModel", function (req, res) {
-  shell.exec('/home/ubuntu/flaskapp/RefreshMLBookingPriceModel.sh');
+  shell.exec('sudo /home/ubuntu/flaskapp/RefreshMLBookingPriceModel.sh');
   res.json({status: "updated"});
 });
 
