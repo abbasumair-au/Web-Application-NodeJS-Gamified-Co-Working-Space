@@ -168,7 +168,7 @@ app.get("/changeGZPrice", function (req, res) {
   let PriceChangeQuery = function (err, result) {
     if (err) throw err;
     try{
-      shell.exec('sudo /home/ubuntu/flaskapp/RefreshSimulationModel.sh');
+      shell.exec('sudo ./UpdateSimulationModel.sh');
       res.json({ result: result });
       }catch(err){
         console.log(err);
@@ -274,7 +274,7 @@ app.get('/getAllNotifications', function(req,res){
 app.get('/ViewTrefflesDetails', function(req, res){
   let UID = parseInt(req.query.UID);
 
-  let sql_ViewTreffles = "select c.CrorDb, c.Total from tblCredits c where UID = '"+UID+"'";
+  let sql_ViewTreffles = "select c.ForWhat AS forwhat, c.CrorDb AS crordb, c.Total AS total from tblCredits c where UID = '"+UID+"'";
   let ViewTrefflesDetails = function(err, result){
     if(err) throw err;
     res.json({TrefflesDetails: result});

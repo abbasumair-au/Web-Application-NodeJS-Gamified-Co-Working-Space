@@ -11,7 +11,7 @@ export class HomeService {
   public findPoints(userId) {
     let params = new HttpParams();
     params = params.append('UID',userId);
-    return this.http.get("http://localhost:5011/userTrefels", {params: params}).toPromise();
+    return this.http.get("http://52.91.17.178:5011/userTrefels", {params: params}).toPromise();
   }
 
   public findTodayAndTomorrowBooking(today, tomorrow, uId) {
@@ -19,6 +19,6 @@ export class HomeService {
     params = params.append('today',today);
     params = params.append('tomorrow',tomorrow);
     params = params.append('uId',uId);
-    return this.http.get("http://localhost:5011/ViewTodayBooking", {params: params}).toPromise();
+    return this.http.get("http://52.91.17.178:5011/ViewTodayBooking", {params: params}).toPromise();
   }
 }

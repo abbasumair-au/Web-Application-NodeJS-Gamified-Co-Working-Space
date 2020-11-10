@@ -88,3 +88,150 @@ body {
 	background-size: cover;
 
 }
+
+
+/* for animation */
+
+/*body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	background: #fff6e3;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.main {
+	position: relative;
+}*/
+
+.dragon {
+	width: 200px;
+	height: 140px;
+	transform-origin: 50% 80%;
+	animation: zoomIn .5s cubic-bezier(0.47, 0, 0.75, 0.72) infinite alternate;
+}
+
+.shadow-wrapper {
+	position: absolute;
+	top: 110px;
+	width: 100%;
+}
+
+.fire-wrapper {
+	position: absolute;
+	width: 60px;
+	top: 60px;
+	left: 88px;
+	transform: translate(-50%, -50%);
+	transform-origin: 50% 100%;
+	animation: fireUp 1s ease-in infinite;
+}
+
+.fire {
+	padding-bottom: 135%;
+	width: 100%;
+	height: 100%;
+	background-image: url(assets/green-env.jpg);
+	background-repeat: no-repeat;
+	background-size: contain;
+	animation: fire 1s ease-out infinite;
+
+}
+
+ .fire1 {
+	padding-bottom: 135%;
+	width: 100%;
+	height: 100%;
+	background-image: url(assets/green-env.jpg);
+	background-repeat: no-repeat;
+	background-size: contain;
+	animation: fire 1s ease-out infinite;
+
+}
+
+.fire2 {
+	padding-bottom: 135%;
+	width: 100%;
+	height: 100%;
+	background-image: url(assets/green-env.jpg);
+	background-repeat: no-repeat;
+	background-size: contain;
+	animation: fire 1s ease-out infinite;
+
+}
+
+.fire3 {
+	padding-bottom: 135%;
+	width: 100%;
+	height: 100%;
+	background-image: url(assets/green-env.jpg);
+	background-repeat: no-repeat;
+	background-size: contain;
+	animation: fire 1s ease-out infinite;
+
+}
+
+
+.progress {
+	margin-top: 30px;
+	width: 70%;
+}
+
+.progress .outer {
+	width: 100%;
+	height: 14px;
+	border-radius: 7px;
+	background: rgba(0, 0, 0, 0.1);
+	overflow: hidden;
+}
+
+.progress .inner {
+	width: 0;
+	height: 100%;
+	background: #ffcd33;
+	animation: loading 2s linear infinite;
+}
+
+
+@keyframes loading {
+	100% {
+		width: 100%;
+	}
+}
+
+@keyframes fireUp {
+	0% {
+		top: 70px;
+	}
+
+	20% {
+		top: 70px;
+	}
+
+	100% {
+		top: -80px;
+	}
+}
+
+@keyframes fire {
+	0% {
+		transform: scale(0, 0);
+		opacity: 0.8;
+	}
+
+	20% {
+		transform: scale(0, 0);
+		opacity: 0.8;
+	}
+
+	50% {
+		opacity: 0.8;
+	}
+
+	100% {
+		transform: scale(1, 1);
+		opacity: 0;
+	}
+}
