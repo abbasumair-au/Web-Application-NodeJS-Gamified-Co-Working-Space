@@ -172,12 +172,12 @@ app.get("/changeGZPrice", function (req, res) {
   let PriceChangeQuery = function (err, result) {
     if (err) throw err;
     try{
-      shell.exec('cd /home/ubuntu/flaskapp sudo ./RefreshSimulationModel.sh');
+      shell.exec('sudo /home/ubuntu/flaskapp/RefreshSimulationModel.sh');
+	res.json("done");
       }catch(err){
         console.log(err);
       }
-    res.json({ result: result }); //need to be removed when api comes
-  };
+    };
   mssql.query(sql_PriceChangeQuery, PriceChangeQuery);
 });
 
