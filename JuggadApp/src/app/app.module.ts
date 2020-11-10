@@ -18,6 +18,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarModule } from 'primeng/calendar';
 import {DropdownModule} from 'primeng/dropdown';
+import { TrefflesComponent } from './components/treffles/treffles.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import {DropdownModule} from 'primeng/dropdown';
     ConfirmbookingComponent,
     HomeComponent,
     BookgreenzoneComponent,
-    AdminComponent
+    AdminComponent,
+    TrefflesComponent
   ],
   imports: [
     BrowserModule,

@@ -271,5 +271,16 @@ app.get('/getAllNotifications', function(req,res){
   mssql.query(sql_Notifications, NotificationsDetails);
 })
 
+app.get('/ViewTrefflesDetails', function(req, res){
+  let UID = parseInt(req.query.UID);
+
+  let sql_ViewTreffles = "select c.CrorDb, c.Total from tblCredits c where UID = '"+UID+"'";
+  let ViewTrefflesDetails = function(err, result){
+    if(err) throw err;
+    res.json({TrefflesDetails: result});
+  };
+
+  mssql.query(sql_ViewTreffles, ViewTrefflesDetails);
+});
 
 };

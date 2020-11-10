@@ -8,6 +8,7 @@ import { ConfirmbookingComponent } from './components/confirmbooking/confirmbook
 import { HomeComponent } from './components/home/home.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { AdminComponent } from './components/admin/admin.component';
+import { TrefflesComponent } from './components/treffles/treffles.component';
 
 
 const routes: Routes = [
@@ -46,6 +47,11 @@ const routes: Routes = [
   {
   path: 'admin',
   component: AdminComponent
+  }
+  ,
+  {
+  path: 'treffles',
+  component: TrefflesComponent
   }
 ];
 
