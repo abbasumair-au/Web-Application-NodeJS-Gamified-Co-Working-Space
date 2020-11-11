@@ -247,6 +247,7 @@ app.get("/updateBookingPriceModel", function (req, res) {
   }
 });
 
+
 app.get('/ViewTodayBooking', function(req, res){
   
   let today =  req.query.today;
@@ -285,11 +286,11 @@ app.get('/getAllNotifications', function(req,res){
 
 app.get('/ViewTrefflesDetails', function(req, res){
   let UID = parseInt(req.query.UID);
-
   let sql_ViewTreffles = "select c.ForWhat AS forwhat, c.CrorDb AS crordb, c.Total AS total from tblCredits c where UID = '"+UID+"'";
   let ViewTrefflesDetails = function(err, result){
     if(err) throw err;
-    res.json({TrefflesDetails: result});
+    console.log(result);
+    res.json({trefflesDetails: result});
   };
 
   mssql.query(sql_ViewTreffles, ViewTrefflesDetails);

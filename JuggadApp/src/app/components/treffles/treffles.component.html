@@ -28,7 +28,7 @@
   <div class="row" >
     <div class="col-sm-8 offset-1">
       <table class="table">
-          <thead bgcolor="darkgreen">
+          <thead style="background-color: darkgreen;">
             <tr>
               <th></th>
               <th>Cr or Db</th>
@@ -36,22 +36,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Green Path</td>
-              <td></td>
-              <td></td>
-            </tr>
-
-            <tr>
-              <td>Booking</td>
-              <td></td>
-              <td></td>
-            </tr>
-
-            <tr>
-              <td>Green Store</td>
-              <td></td>
-              <td></td>
+            <tr *ngFor="let item of trefflesDetails">
+              <td>{{item.forwhat === 'BID'? 'Booking' : (item.forwhat === 'PID'? 'Parking' : 'Greenpath')}}</td>
+              <td>{{item.crordb}}</td>
+              <td>{{item.total}}</td>
             </tr>
           </tbody>
         </table>

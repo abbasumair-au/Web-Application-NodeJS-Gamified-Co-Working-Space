@@ -53,16 +53,16 @@ export class BookgreenzoneComponent implements OnInit {
   pricecolors : PriceColor[] = [
     {
       price_min: 0,
-      price_max: 10,
+      price_max: 30,
       color: 'green'
     },
     {
-      price_min: 11,
-      price_max: 20,
+      price_min: 31,
+      price_max: 70,
       color: 'yellow'
     },{
-      price_min: 21,
-      price_max: 100,
+      price_min: 71,
+      price_max: 1000,
       color: 'red'
     }
   ];
@@ -167,7 +167,7 @@ export class BookgreenzoneComponent implements OnInit {
         let noOfPersonsPerDay = await this.bookgreenzoneservice.getNoOfPersonsPerDay(day);
         persons = noOfPersonsPerDay['persons'].recordsets[0][0].noOfPersons;
         if(persons){
-          let occupancy = Math.round((persons/3600)*100);
+          let occupancy = Math.round((persons/1000)*100);
           let data = await this.bookgreenzoneservice.fillCalender(30, 1, 0, 7, 20, occupancy);
           this.priceList.push({
             date: day,

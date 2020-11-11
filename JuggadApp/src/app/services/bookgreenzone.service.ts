@@ -65,4 +65,5 @@ export class BookgreenzoneService {
     return this.http.get("http://52.91.17.178:5011/getNoOfPersonsPerDayAndStartTime", {params: params}).toPromise();
   }
 
+  
 }
