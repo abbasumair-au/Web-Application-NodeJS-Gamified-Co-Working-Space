@@ -142,8 +142,10 @@ app.get("/changeGreenHourPrice", function (req, res) {
   let PriceChangeQuery = function (err, result) {
     if (err) throw err;
     try{
-    shell.exec('sudo /home/ubuntu/flaskapp/RefreshSimulationModel.sh');
-    res.json({ result: result });
+      console.log("shell execution starts");
+      shell.exec('sudo /home/ubuntu/flaskapp/RefreshSimulationModel.sh');
+      console.log("shell executed");
+      res.json({ result: result });
     }catch(err){
       console.log(err);
     }
@@ -168,11 +170,13 @@ app.get("/changeGZPrice", function (req, res) {
   let PriceChangeQuery = function (err, result) {
     if (err) throw err;
     try{
-      shell.exec('sudo ./UpdateSimulationModel.sh');
+      console.log("shell execution starts");
+      shell.exec('sudo /home/ubuntu/flaskapp/RefreshSimulationModel.sh');
+      console.log("shell executed");
       res.json({ result: result });
-      }catch(err){
-        console.log(err);
-      }
+    }catch(err){
+      console.log(err);
+    }
   };
   mssql.query(sql_PriceChangeQuery, PriceChangeQuery);
 });
@@ -198,11 +202,13 @@ app.get("/changeOccupancyPrice", function (req, res) {
   let PriceChangeQuery = function (err, result) {
     if (err) throw err;
     try{
+      console.log("shell execution starts");
       shell.exec('sudo /home/ubuntu/flaskapp/RefreshSimulationModel.sh');
+      console.log("shell executed");
       res.json({ result: result });
-      }catch(err){
-        console.log(err);
-      }
+    }catch(err){
+      console.log(err);
+    }
   };
   mssql.query(sql_PriceChangeQuery, PriceChangeQuery);
 });
@@ -231,8 +237,14 @@ app.get("/getNoOfPersonsPerDayAndStartTime", function (req, res) {
 
 
 app.get("/updateBookingPriceModel", function (req, res) {
-  shell.exec('cd /home/ubuntu/flaskapp sudo ./RefreshMLBookingPriceModel.sh');
-  res.json({status: "updated"});
+  try{
+    console.log("shell execution starts");
+    shell.exec('sudo /home/ubuntu/flaskapp/RefreshMLBookingPriceModel.sh');
+    console.log("shell executed");
+    res.json({ result: result });
+  }catch(err){
+    console.log(err);
+  }
 });
 
 app.get('/ViewTodayBooking', function(req, res){
