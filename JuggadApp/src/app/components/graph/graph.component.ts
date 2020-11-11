@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { GraphService } from 'src/app/services/graph.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { GraphService } from 'src/app/services/graph.service';
 })
 export class GraphComponent implements OnInit {
 
-  constructor(private graphservice: GraphService) {
+  constructor(private graphservice: GraphService, public router: Router) {
     //Object.assign(this, { single })
   }
 
@@ -34,32 +35,33 @@ export class GraphComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    
-    this.graphservice.savingsfromBookingGreenHour().then((data) => {
-      console.log(this.greenHour);
-      this.greenHour = data['SavingsfromBookingGreenHour'].recordsets[0];
-      console.log(this.greenHour);
-    }).catch((err: any) => {
-      console.log(err);
-    });
-
-    this.graphservice.savingsGreenPath().then((data) => {
-      console.log(this.greenPath);
-      this.greenPath = data['SavingsGreenPath'].recordsets[0];
-      console.log(this.greenPath);
-    }).catch((err: any) => {
-      console.log(err);
-    });
-
-    this.graphservice.savingsfromGreenParking().then((data) => {
-      console.log(this.greenParking);
-      this.greenParking = data['SavingsfromGreenParking'].recordsets[0];
-      console.log(this.greenParking);
-    }).catch((err: any) => {
-      console.log(err);
-    });
-
-
+    if(sessionStorage.getItem('userId') === 'admin'){    
+      this.graphservice.savingsfromBookingGreenHour().then((data) => {
+        console.log(this.greenHour);
+        this.greenHour = data['SavingsfromBookingGreenHour'].recordsets[0];
+        console.log(this.greenHour);
+      }).catch((err: any) => {
+        console.log(err);
+      });
+  
+      this.graphservice.savingsGreenPath().then((data) => {
+        console.log(this.greenPath);
+        this.greenPath = data['SavingsGreenPath'].recordsets[0];
+        console.log(this.greenPath);
+      }).catch((err: any) => {
+        console.log(err);
+      });
+  
+      this.graphservice.savingsfromGreenParking().then((data) => {
+        console.log(this.greenParking);
+        this.greenParking = data['SavingsfromGreenParking'].recordsets[0];
+        console.log(this.greenParking);
+      }).catch((err: any) => {
+        console.log(err);
+      });
+    }else{
+      this.router.navigate(['/home']);
+    }
   }
   
   onSelect(event) {

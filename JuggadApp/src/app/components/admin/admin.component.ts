@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AdminService } from 'src/app/services/admin.service';
 //import {PythonShell} from 'python-shell';
 
@@ -9,7 +10,7 @@ import { AdminService } from 'src/app/services/admin.service';
 })
 export class AdminComponent implements OnInit {
 
-  constructor(private adminservice:AdminService) { }
+  constructor(private adminservice:AdminService, public router: Router) { }
 
   selectedDayPart = "";
   selectedZone = "";
@@ -23,15 +24,15 @@ export class AdminComponent implements OnInit {
   oldPrice = 0;
 
   ngOnInit(): void {
+    if(sessionStorage.getItem('userId') !== 'admin'){    
+      this.router.navigate(['/home']);
+    }
+    
   }
 
   public changeGreenHourPrice(daypart, action){
     this.adminservice.changeGreenHourPrice(daypart, action).then((data) => {
       console.log(data);
-      /*PythonShell.run('refreshmodel.py', null, function (err) {
-        if (err) throw err;
-        console.log('finished');
-      });*/
       this.simulateBooking("new");
     }).catch((err: any) => {
       console.log(err);
@@ -41,10 +42,6 @@ export class AdminComponent implements OnInit {
   public changeGZPrice(zone, action){
     this.adminservice.changeGZPrice(zone, action).then((data) => {
       console.log(data);
-      /*PythonShell.run('my_script.py', null, function (err) {
-        if (err) throw err;
-        console.log('finished');
-      });*/
       this.simulateBooking("new");
     }).catch((err: any) => {
       console.log(err);
@@ -55,10 +52,6 @@ export class AdminComponent implements OnInit {
   public changeOccupancyPrice(occ, action){
     this.adminservice.changeOccupancyPrice(occ, action).then((data) => {
       console.log(data);
-      /*PythonShell.run('my_script.py', null, function (err) {
-        if (err) throw err;
-        console.log('finished');
-      });*/
       this.simulateBooking("new");
     }).catch((err: any) => {
       console.log(err);
@@ -76,23 +69,15 @@ export class AdminComponent implements OnInit {
     let rz = 0;
     let occupancy = 0;
     if(this.selectedDayPart === "Morning"){
-      /*let t1 = this.morningHours[Math.random() * this.morningHours.length];
-      let t2 = this.morningHours[Math.random() * this.morningHours.length];*/
       startTime = 7;
       endTime = 8;
     }else if(this.selectedDayPart === "Afternoon"){
-      /*let t1 = this.afternoonHours[Math.random() * this.afternoonHours.length];
-      let t2 = this.afternoonHours[Math.random() * this.afternoonHours.length];*/
       startTime = 14;
       endTime = 15;
     }else if(this.selectedDayPart === "Evening"){
-      /*let t1 = this.eveningHours[Math.random() * this.eveningHours.length];
-      let t2 = this.eveningHours[Math.random() * this.eveningHours.length];*/
       startTime = 19;
       endTime = 20;
     }else if(this.selectedDayPart === "Night"){
-      /*let t1 = this.nightHours[Math.random() * this.nightHours.length];
-      let t2 = this.nightHours[Math.random() * this.nightHours.length];*/
       startTime = 22;
       endTime = 23;
     }
