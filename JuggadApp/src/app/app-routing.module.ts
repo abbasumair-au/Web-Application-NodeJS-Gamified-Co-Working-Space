@@ -9,6 +9,7 @@ import { HomeComponent } from './components/home/home.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { TrefflesComponent } from './components/treffles/treffles.component';
+import { GraphComponent } from './components/graph/graph.component';
 
 
 const routes: Routes = [
@@ -42,16 +43,18 @@ const routes: Routes = [
   {
   path: 'register',
   component: RegistrationComponent
-  }
-  ,
+  },
   {
   path: 'admin',
   component: AdminComponent
-  }
-  ,
+  },
   {
   path: 'treffles',
   component: TrefflesComponent
+  },
+  {
+  path: 'graph',
+  component: GraphComponent
   }
 ];
 

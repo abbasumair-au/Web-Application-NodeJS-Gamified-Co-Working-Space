@@ -296,4 +296,42 @@ app.get('/ViewTrefflesDetails', function(req, res){
   mssql.query(sql_ViewTreffles, ViewTrefflesDetails);
 });
 
+//Api for graph
+
+app.get('/savingsGreenPath', function(req, res){
+  let sql_GreenPath = "select [Date] AS name, count(*)*10 as value from tblGreenPath left join tblCredits on GID = ReffID where ForWhat = 'GID' group by [Date]";
+  // select top 5 c.CrorDb*100/NullIf(c.Total,0) as savings from tblCredits c
+  let SavingsGreenPath = function(err, result){
+    if(err) throw err;
+
+    res.json({SavingsGreenPath: result});
+  };
+  mssql.query(sql_GreenPath,SavingsGreenPath )
+  
+});
+
+app.get('/savingsfromBookingGreenHour', function(req, res){
+  let sql_BookingGreenHour = "select [Date] AS name, count(*)*10 as value from tblBookings left join tblCredits on BID = ReffID where ForWhat = 'BID' group by [Date]";
+  // select top 5 c.CrorDb*100/NullIf(c.Total,0) as savings from tblCredits c
+  let SavingsfromBookingGreenHour = function(err, result){
+    if(err) throw err;
+
+    res.json({SavingsfromBookingGreenHour: result});
+  };
+  mssql.query(sql_BookingGreenHour,SavingsfromBookingGreenHour )
+  
+});
+
+app.get('/savingsfromGreenParking', function(req, res){
+  let sql_GreenParking = "select [Date] AS name, count(*)*10 as value from tblGreenParking left join tblCredits on PID = ReffID where ForWhat = 'PID' group by [Date]";
+  // select top 5 c.CrorDb*100/NullIf(c.Total,0) as savings from tblCredits c
+  let SavingsfromGreenParking = function(err, result){
+    if(err) throw err;
+
+    res.json({SavingsfromGreenParking: result});
+  };
+  mssql.query(sql_GreenParking,SavingsfromGreenParking )
+  
+});
+
 };

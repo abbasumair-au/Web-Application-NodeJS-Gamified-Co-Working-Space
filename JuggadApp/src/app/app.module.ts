@@ -19,6 +19,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarModule } from 'primeng/calendar';
 import {DropdownModule} from 'primeng/dropdown';
 import { TrefflesComponent } from './components/treffles/treffles.component';
+import { GraphComponent } from './components/graph/graph.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 
 @NgModule({
@@ -33,7 +35,8 @@ import { TrefflesComponent } from './components/treffles/treffles.component';
     HomeComponent,
     BookgreenzoneComponent,
     AdminComponent,
-    TrefflesComponent
+    TrefflesComponent,
+    GraphComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +46,8 @@ import { TrefflesComponent } from './components/treffles/treffles.component';
     CommonModule,
     CalendarModule,
     BrowserAnimationsModule,
-    DropdownModule
+    DropdownModule,
+    NgxChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

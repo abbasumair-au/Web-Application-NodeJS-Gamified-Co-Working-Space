@@ -1,0 +1,71 @@
+<div class="container">
+    <div style="align-items: center;">
+        <div class="row">
+            <div class="col-sm-6">
+                <div style="align-items: center; padding: 2%;">
+                    <h3>Electricity Saving by green hour</h3>
+                    <div style="align-items: center; padding: 2%;">
+                        <ngx-charts-bar-vertical
+                        [view]="view"
+                        [scheme]="colorScheme"
+                        [results]="greenHour"
+                        [gradient]="gradient"
+                        [xAxis]="showXAxis"
+                        [yAxis]="showYAxis"
+                        [legend]="showLegend"
+                        [showXAxisLabel]="showXAxisLabel"
+                        [showYAxisLabel]="showYAxisLabel"
+                        [xAxisLabel]="xAxisLabel"
+                        [yAxisLabel]="yAxisLabel"
+                        (select)="onSelect($event)">
+                        </ngx-charts-bar-vertical>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div style="align-items: center; padding: 5%;">
+                    <h3>Electricity Saving by green path</h3>
+                    <div style="align-items: center; padding: 2%;">
+                        <ngx-charts-bar-vertical
+                        [view]="view"
+                        [scheme]="colorScheme"
+                        [results]="greenPath"
+                        [gradient]="gradient"
+                        [xAxis]="showXAxis"
+                        [yAxis]="showYAxis"
+                        [legend]="showLegend"
+                        [showXAxisLabel]="showXAxisLabel"
+                        [showYAxisLabel]="showYAxisLabel"
+                        [xAxisLabel]="xAxisLabel"
+                        [yAxisLabel]="yAxisLabel"
+                        (select)="onSelect($event)">
+                        </ngx-charts-bar-vertical>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+                <div style="align-items: center; padding: 2%;">
+                    <h3>Electricity Saving by green parking</h3>
+                    <div style="align-items: center; padding: 2%;">
+                        <ngx-charts-bar-vertical
+                        [view]="view"
+                        [scheme]="colorScheme"
+                        [results]="greenParking"
+                        [gradient]="gradient"
+                        [xAxis]="showXAxis"
+                        [yAxis]="showYAxis"
+                        [legend]="showLegend"
+                        [showXAxisLabel]="showXAxisLabel"
+                        [showYAxisLabel]="showYAxisLabel"
+                        [xAxisLabel]="xAxisLabel"
+                        [yAxisLabel]="yAxisLabel"
+                        (select)="onSelect($event)">
+                        </ngx-charts-bar-vertical>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -12,7 +12,7 @@ export class AdminService {
     let params = new HttpParams();
     params = params.append('dayPart',dayPart);
     params = params.append('action',action);
-    return this.http.get("http://52.91.17.178/:5011/changeGreenHourPrice", {params: params}).toPromise();
+    return this.http.get("http://52.91.17.178:5011/changeGreenHourPrice", {params: params}).toPromise();
   }
 
   public changeGZPrice(zone, action){
