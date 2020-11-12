@@ -24,9 +24,11 @@ module.exports = (app, mssql, shell) => {
       var month = dateObj.getUTCMonth() + 1; //months from 1-12
       var day = dateObj.getUTCDate();
       var year = dateObj.getUTCFullYear();
+      var hour = dateObj.getHours();
+      var minutes = dateObj.getMinutes();
 
-      console.log(year+" "+month+" "+day);
-      let sql_saveMessage = "INSERT INTO tblNotification (uid,text,Date) VALUES ('"+selectedUser.recordsets[0][0].userId+"' ,'Amrutha has logged in to Jugaad App','Nov 12 2020 12:32PM')"
+      let sql_saveMessage = "INSERT INTO tblNotification (uid,text,Date) VALUES ('"+selectedUser.recordsets[0][0].userId+"' ,'"
+      +selectedUser.recordsets[0][0].name+"' has logged in to Jugaad App','"+(day+"-"+month+"-"+year+" "+hour+":"+minutes +" "+(hour >= 12 ? "PM" : "AM"))+"');";
       let SaveMessageCallBack = function (err, result) {
         if (err) throw err;
         console.log
