@@ -67,6 +67,23 @@ export class BookgreenzoneComponent implements OnInit {
     }
   ];
 
+  hourPricecolors : PriceColor[] = [
+    {
+      price_min: 0,
+      price_max: 15,
+      color: 'green'
+    },
+    {
+      price_min: 16,
+      price_max: 30,
+      color: 'yellow'
+    },{
+      price_min: 31,
+      price_max: 1000,
+      color: 'red'
+    }
+  ];
+
   priceList: PricePerDate[] = [];
   hourOccList: HourPrice[] = [];
   
@@ -271,7 +288,7 @@ export class BookgreenzoneComponent implements OnInit {
 
 
   public fillTimeColor(price : any){
-    const priceColor: PriceColor = this.pricecolors.find(pcolor => {
+    const priceColor: PriceColor = this.hourPricecolors.find(pcolor => {
       if(price >= pcolor.price_min && price <= pcolor.price_max){
         return true;
       }
