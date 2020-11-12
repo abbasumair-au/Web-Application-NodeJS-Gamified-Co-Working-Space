@@ -16,7 +16,7 @@ export class BookgreenzoneService {
     params = params.append('d', startTime);
     params = params.append('e', endTime);
     params = params.append('f', occupancy);
-    return this.http.get("http://52.91.17.178:9000/MLBookingPrice_api", {params: params}).toPromise();
+    return this.http.get("http://52.91.17.178:9000/MLBookingSimmulation_api", {params: params}).toPromise();
   }
 
   public checkOccupancy(zoneId){
@@ -51,7 +51,7 @@ export class BookgreenzoneService {
     params = params.append('d',startTime);
     params = params.append('e',endTime);
     params = params.append('f',occupancy);
-    return this.http.get("http://52.91.17.178:9000/MLBookingPrice_api", {params: params}).toPromise();
+    return this.http.get("http://52.91.17.178:9000/MLBookingSimmulation_api", {params: params}).toPromise();
   }
 
   async getNoOfPersonsPerDay(date){
