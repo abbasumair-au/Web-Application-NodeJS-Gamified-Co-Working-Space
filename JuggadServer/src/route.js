@@ -20,8 +20,18 @@ module.exports = (app, mssql, shell) => {
       if (err) {
         return res.json({ user: selectedUser }).status(400);
       }
+    /*  console.log(selectedUser);
+      let sql_saveMessage = "INSERT INTO tblNotification (uid,text,Date) VALUES (2 ,'Amrutha has logged in to Jugaad App','Nov 12 2020 12:32PM')"
+      let SaveMessageCallBack = function (err, result) {
+      if (err) throw err;
+      console.log
       res.json({ user: selectedUser });
+      };
+      mssql.query(sql_saveMessage, SaveMessageCallBack);
+      */
+     res.json({ user: selectedUser });
     };
+    res.json({ user: selectedUser });
     mssql.query(sql, callBackFunctionLogin);
   });
 
@@ -122,21 +132,21 @@ app.get("/changeGreenHourPrice", function (req, res) {
   let sql_PriceChangeQuery = "";
 
   if(dayPart === "Morning" && action === "Plus"){
-    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price + 1 where starttime in (6,7,8);";
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price + 5 where starttime in (6,7,8);";
   }else if(dayPart === "Afternoon" && action === "Plus"){
-    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price + 1 where starttime in (9,10,11,12,13,14,15,16,17,18);";
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price + 5 where starttime in (9,10,11,12,13,14,15,16,17,18);";
   }else if(dayPart === "Evening" && action === "Plus"){
-    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price + 1 where starttime in (19,20,21,22);";
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price + 5 where starttime in (19,20,21,22);";
   }else if(dayPart === "Night" && action === "Plus"){
-    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price + 1 where starttime in (22,23,24,0,1,2,3,4,5);";
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price + 5 where starttime in (22,23,24,0,1,2,3,4,5);";
   }else if(dayPart === "Morning" && action === "Minus"){
-    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price - 1 where starttime in (6,7,8);";
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price - 5 where starttime in (6,7,8);";
   }else if(dayPart === "Afternoon" && action === "Minus"){
-    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price - 1 where starttime in (9,10,11,12,13,14,15,16,17,18);";
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price - 5 where starttime in (9,10,11,12,13,14,15,16,17,18);";
   }else if(dayPart === "Evening" && action === "Minus"){
-    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price - 1 where starttime in (19,20,21,22);";
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price - 5 where starttime in (19,20,21,22);";
   }else if(dayPart === "Night" && action === "Minus"){
-    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price - 1 where starttime in (22,23,24,0,1,2,3,4,5);";
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price - 5 where starttime in (22,23,24,0,1,2,3,4,5);";
   }
 
   let PriceChangeQuery = function (err, result) {
@@ -159,13 +169,13 @@ app.get("/changeGZPrice", function (req, res) {
   let sql_PriceChangeQuery = "";
 
   if(zone === "GZ" && action === "Plus"){
-    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price + 1 where gz = 1;";
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price + 5 where gz = 1;";
   }else if(zone === "RZ" && action === "Plus"){
-    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price + 1 where rz = 1;";
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price + 5 where rz = 1;";
   }else if(zone === "GZ" && action === "Minus"){
-    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price - 1 where gz = 1;";
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price - 5 where gz = 1;";
   }else if(zone === "RZ" && action === "Minus"){
-    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price - 1 where rz = 1;";
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price - 5 where rz = 1;";
   }
   let PriceChangeQuery = function (err, result) {
     if (err) throw err;
@@ -187,17 +197,17 @@ app.get("/changeOccupancyPrice", function (req, res) {
   let sql_PriceChangeQuery = "";
 
   if(occ === "Low" && action === "Plus"){
-    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price + 1 where occupancy < 31;";
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price + 5 where occupancy < 31;";
   }else if(occ === "Medium" && action === "Plus"){
-    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price + 1 where occupancy > 30 and occupancy < 71;";
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price + 5 where occupancy > 30 and occupancy < 71;";
   }else if(occ === "High" && action === "Plus"){
-    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price + 1 where occupancy > 70;";
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price + 5 where occupancy > 70;";
   }else if(occ === "Low" && action === "Minus"){
-    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price - 1 where occupancy < 31;";
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price - 5 where occupancy < 31;";
   }else if(occ === "Medium" && action === "Minus"){
-    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price - 1 where occupancy > 30 and occupancy < 71;";
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price - 5 where occupancy > 30 and occupancy < 71;";
   }else if(occ === "High" && action === "Minus"){
-    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price - 1 where occupancy > 70;";
+    sql_PriceChangeQuery = "update MLBookingSimmulationTrainData  SET price = price - 5 where occupancy > 70;";
   }
   let PriceChangeQuery = function (err, result) {
     if (err) throw err;
@@ -275,7 +285,7 @@ app.get('/NotificationsDetails', function(req,res){
 })
 
 app.get('/getAllNotifications', function(req,res){
-  let sql_Notifications = "select n.text from tblNotification n";
+  let sql_Notifications = "select n.text from tblNotification n ORDER BY nid DESC";
   let NotificationsDetails = function(err,result){
     if(err) throw err;
     console.log(result);
