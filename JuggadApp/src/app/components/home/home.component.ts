@@ -52,7 +52,7 @@ export class HomeComponent implements OnInit {
           if(bookings[0]){
             this.todayStartTime = bookings[0].StartTime;
             this.todayEndTime = bookings[0].EndTime;
-            this.todayRoom = bookings[0].RoomNo;
+            this.todayRoom = bookings[0].Zone+" "+bookings[0].RoomNo;
             this.todayBookingId = bookings[0].BID;
             this.todayBooking = this.todayStartTime+" to "+this.todayEndTime+" - "+this.todayRoom;
           }else{
@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit {
           if(bookings[1]){
             this.tomorrowStartTime = bookings[1].StartTime;
             this.tomorrowEndTime = bookings[1].EndTime;
-            this.tomorrowRoom = bookings[1].RoomNo;
+            this.tomorrowRoom = bookings[1].Zone+" "+bookings[1].RoomNo;
             this.tomorrowBookingId = bookings[1].BID;
             this.tomorrowBooking = this.tomorrowStartTime+" to "+this.tomorrowEndTime+" - "+this.tomorrowRoom;
           }else{
