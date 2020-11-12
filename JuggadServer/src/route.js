@@ -20,18 +20,21 @@ module.exports = (app, mssql, shell) => {
       if (err) {
         return res.json({ user: selectedUser }).status(400);
       }
-    /*  console.log(selectedUser);
-      let sql_saveMessage = "INSERT INTO tblNotification (uid,text,Date) VALUES (2 ,'Amrutha has logged in to Jugaad App','Nov 12 2020 12:32PM')"
+      /*const dateObj =  new Date();
+      var month = dateObj.getUTCMonth() + 1; //months from 1-12
+      var day = dateObj.getUTCDate();
+      var year = dateObj.getUTCFullYear();
+
+      console.log(year+" "+month+" "+day);
+      let sql_saveMessage = "INSERT INTO tblNotification (uid,text,Date) VALUES ('"+selectedUser.recordsets[0][0].userId+"' ,'Amrutha has logged in to Jugaad App','Nov 12 2020 12:32PM')"
       let SaveMessageCallBack = function (err, result) {
-      if (err) throw err;
-      console.log
-      res.json({ user: selectedUser });
+        if (err) throw err;
+        console.log
+        res.json({ user: selectedUser });
       };
-      mssql.query(sql_saveMessage, SaveMessageCallBack);
-      */
-     res.json({ user: selectedUser });
+      mssql.query(sql_saveMessage, SaveMessageCallBack);*/
+      res.json({ user: selectedUser });
     };
-    res.json({ user: selectedUser });
     mssql.query(sql, callBackFunctionLogin);
   });
 
