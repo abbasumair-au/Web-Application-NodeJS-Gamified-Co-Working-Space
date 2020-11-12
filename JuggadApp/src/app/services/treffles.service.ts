@@ -11,7 +11,7 @@ export class TrefflesService {
   public getTrefflesDetails(userId){
     let params = new HttpParams();
     params = params.append('UID',userId);
-    return this.http.get("http://52.91.17.178:5011/ViewTrefflesDetails", {params: params}).toPromise();
+    return this.http.get("http://ec2-54-226-17-170.compute-1.amazonaws.com:5011/ViewTrefflesDetails", {params: params}).toPromise();
   }
 
 }

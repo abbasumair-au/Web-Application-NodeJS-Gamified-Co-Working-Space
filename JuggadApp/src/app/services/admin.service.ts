@@ -12,21 +12,21 @@ export class AdminService {
     let params = new HttpParams();
     params = params.append('dayPart',dayPart);
     params = params.append('action',action);
-    return this.http.get("http://52.91.17.178:5011/changeGreenHourPrice", {params: params}).toPromise();
+    return this.http.get("http://ec2-54-226-17-170.compute-1.amazonaws.com:5011/changeGreenHourPrice", {params: params}).toPromise();
   }
 
   public changeGZPrice(zone, action){
     let params = new HttpParams();
     params = params.append('zone',zone);
     params = params.append('action',action);
-    return this.http.get("http://52.91.17.178:5011/changeGZPrice", {params: params}).toPromise();
+    return this.http.get("http://ec2-54-226-17-170.compute-1.amazonaws.com:5011/changeGZPrice", {params: params}).toPromise();
   }
 
   public changeOccupancyPrice(occ, action){
     let params = new HttpParams();
     params = params.append('occ',occ);
     params = params.append('action',action);
-    return this.http.get("http://52.91.17.178:5011/changeOccupancyPrice", {params: params}).toPromise();
+    return this.http.get("http://ec2-54-226-17-170.compute-1.amazonaws.com:5011/changeOccupancyPrice", {params: params}).toPromise();
   }
 
   public simulateBooking(advdays, gz, rz, startTime, endTime,occupancy){
@@ -37,7 +37,7 @@ export class AdminService {
     params = params.append('d',startTime);
     params = params.append('e',endTime);
     params = params.append('f',occupancy);
-    return this.http.get("http://52.91.17.178:9000/MLBookingSimmulation_api", {params: params}).toPromise();
+    return this.http.get("http://ec2-54-226-17-170.compute-1.amazonaws.com:9000/MLBookingSimmulation_api", {params: params}).toPromise();
   }
 
   public getOldPrice(advdays, gz, rz, startTime, endTime,occupancy){
@@ -48,13 +48,13 @@ export class AdminService {
     params = params.append('d',startTime);
     params = params.append('e',endTime);
     params = params.append('f',occupancy);
-    return this.http.get("http://52.91.17.178:9000/MLBookingSimmulation_api", {params: params}).toPromise();
+    return this.http.get("http://ec2-54-226-17-170.compute-1.amazonaws.com:9000/MLBookingSimmulation_api", {params: params}).toPromise();
   }
 
 
 
   public updateBookingPriceModel(){
-    return this.http.get("http://52.91.17.178:5011/updateBookingPriceModel").toPromise();
+    return this.http.get("http://ec2-54-226-17-170.compute-1.amazonaws.com:5011/updateBookingPriceModel").toPromise();
   }
 
 }

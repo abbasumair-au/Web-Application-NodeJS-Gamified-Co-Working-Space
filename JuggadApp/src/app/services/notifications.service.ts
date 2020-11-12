@@ -11,11 +11,11 @@ export class NotificationsService {
   public NotificationsDetails(userId) {
     let params = new HttpParams();
     params = params.append('UID',userId);
-    return this.http.get("http://52.91.17.178:5011/NotificationsDetails", {params: params}).toPromise();
+    return this.http.get("http://ec2-54-226-17-170.compute-1.amazonaws.com:5011/NotificationsDetails", {params: params}).toPromise();
   }
 
   public getAllNotifications(userId) {
-    return this.http.get("http://52.91.17.178:5011/getAllNotifications").toPromise();
+    return this.http.get("http://ec2-54-226-17-170.compute-1.amazonaws.com:5011/getAllNotifications").toPromise();
   }
 
 }
