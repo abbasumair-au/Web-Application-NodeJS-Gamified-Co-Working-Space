@@ -246,6 +246,8 @@ export class BookgreenzoneComponent implements OnInit {
       occupancy = 70;
     }
     if(this.endTime != 0 && this.endTime != undefined){
+      console.log("occupancy");
+      console.log(occupancy);
       this.bookgreenzoneservice.getPricePerHourOfSelectedZone(30, gz, rz, this.startTime, this.endTime, occupancy).then((data) => {
         this.price =  Math.round(data['price']);
         if(this.price == 0){
