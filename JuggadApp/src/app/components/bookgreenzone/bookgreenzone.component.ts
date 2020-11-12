@@ -238,8 +238,8 @@ export class BookgreenzoneComponent implements OnInit {
       }
     } 
 
-    let noOfPersonsPerDay = await this.bookgreenzoneservice.getNoOfPersonsPerDay(day);
-    console.log("noOfPersonsPerDay")
+    let noOfPersonsPerDay = await this.bookgreenzoneservice.getNoOfPersonsPerDay(this.date);
+    console.log("noOfPersonsPerDay");
     console.log(noOfPersonsPerDay);
     persons = noOfPersonsPerDay['persons'].recordsets[0][0].noOfPersons;
     if(persons){

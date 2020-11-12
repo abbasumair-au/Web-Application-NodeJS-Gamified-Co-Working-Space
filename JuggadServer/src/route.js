@@ -230,11 +230,9 @@ app.get("/changeOccupancyPrice", function (req, res) {
 
 app.get("/getNoOfPersonsPerDay", function (req, res) {
   let date = req.query.date;
-  sql_persons = "select COUNT(*)*10 AS noOfPersons from tblbookings where date like '"+date+"';";
+  sql_persons = "select sum((EndTime-StartTime)*Persons) AS noOfPersons from tblbookings where date like '"+date+"';";
   let NoOfPersonsPerDay = function (err, persons) {
     if (err) throw err;
-    console.log("persons");
-    console.log(persons);
     res.json({ persons: persons }); //need to be removed when api comes
   };
   mssql.query(sql_persons, NoOfPersonsPerDay);
