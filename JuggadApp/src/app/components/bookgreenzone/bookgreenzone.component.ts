@@ -239,11 +239,13 @@ export class BookgreenzoneComponent implements OnInit {
     } 
 
     let noOfPersonsPerDay = await this.bookgreenzoneservice.getNoOfPersonsPerDay(day);
+    console.log("noOfPersonsPerDay")
+    console.log(noOfPersonsPerDay);
     persons = noOfPersonsPerDay['persons'].recordsets[0][0].noOfPersons;
     if(persons){
       occupancy = Math.round((persons/3600)*100);
     }else{
-      occupancy = 70;
+      occupancy = 20;
     }
     if(this.endTime != 0 && this.endTime != undefined){
       console.log("occupancy");
