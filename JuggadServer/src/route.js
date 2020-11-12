@@ -20,22 +20,22 @@ module.exports = (app, mssql, shell) => {
       if (err) {
         return res.json({ user: selectedUser }).status(400);
       }
-      /*const dateObj =  new Date();
+      const dateObj =  new Date();
       var month = dateObj.getUTCMonth() + 1; //months from 1-12
       var day = dateObj.getUTCDate();
       var year = dateObj.getUTCFullYear();
       var hour = dateObj.getHours();
       var minutes = dateObj.getMinutes();
-
-      let sql_saveMessage = "INSERT INTO tblNotification (uid,text,Date) VALUES ('"+selectedUser.recordsets[0][0].userId+"' ,'"
-      +selectedUser.recordsets[0][0].name+"' has logged in to Jugaad App','"+(day+"-"+month+"-"+year+" "+hour+":"+minutes +" "+(hour >= 12 ? "PM" : "AM"))+"');";
+      const date = day+"-"+month+"-"+year+" "+hour+":"+minutes +" "+(hour >= 12 ? "PM" : "AM");
+      const textMessage = selectedUser.recordsets[0][0].name+" has logged in to Jugaad App";
+      let sql_saveMessage = "INSERT INTO tblNotification (uid,text,Date) VALUES ('"+selectedUser.recordsets[0][0].userId+"' ,'"+textMessage+"','"+date+"');";
+      console.log(sql_saveMessage);
       let SaveMessageCallBack = function (err, result) {
         if (err) throw err;
         console.log
         res.json({ user: selectedUser });
       };
-      mssql.query(sql_saveMessage, SaveMessageCallBack);*/
-      res.json({ user: selectedUser });
+      mssql.query(sql_saveMessage, SaveMessageCallBack);
     };
     mssql.query(sql, callBackFunctionLogin);
   });
