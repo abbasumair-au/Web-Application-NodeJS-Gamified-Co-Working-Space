@@ -349,4 +349,25 @@ app.get('/savingsfromGreenParking', function(req, res){
   
 });
 
+/*app.put('/moveTodayBooking', function(req, res){
+  let date = req.body.date;
+  let ZID = req.body.ZID;
+  let startTime = req.body.startTime;
+  let endTime = req.body.endTime;
+  let BID = req.body.BID;
+  let UID = req.body.UID;
+  
+
+  let sql_moveTodayBooking = "UPDATE tblBookings SET Date ='"+date+"', ZID = '"+ZID+"', startTime = '"+startTime+"', endTime = '"+endTime+"', ActOrMoved='Moved' WHERE BID = '"+BID+"' & UID = '"+UID+"';";
+  // select top 5 c.CrorDb*100/NullIf(c.Total,0) as savings from tblCredits c
+  let MoveTodayBooking = function(err, result){
+    if(err) throw err;
+
+    res.json({date:date,ZID:ZID,startTime:startTime,endTime:endTime,BID:BID,UID:UID});
+  };
+  mssql.query(sql_moveTodayBooking,MoveTodayBooking )
+  
+});*/
+
+
 };

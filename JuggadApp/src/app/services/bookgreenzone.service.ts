@@ -16,17 +16,17 @@ export class BookgreenzoneService {
     params = params.append('d', startTime);
     params = params.append('e', endTime);
     params = params.append('f', occupancy);
-    return this.http.get("http://ec2-54-226-17-170.compute-1.amazonaws.com:9000/MLBookingSimmulation_api", {params: params}).toPromise();
+    return this.http.get("http://34.205.83.36:9000/MLBookingSimmulation_api", {params: params}).toPromise();
   }
 
   public checkOccupancy(zoneId){
     let params = new HttpParams();
    params = params.append('zoneId',zoneId);
-    return this.http.post("http://ec2-54-226-17-170.compute-1.amazonaws.com:5011/saveBooking", {params: params}).toPromise();
+    return this.http.post("http://34.205.83.36:5011/saveBooking", {params: params}).toPromise();
   }
 
   public saveBooking(userId, zoneId, bookingDate, startTime, endTime, cost){
-    return this.http.post("http://ec2-54-226-17-170.compute-1.amazonaws.com:5011/saveBooking", {
+    return this.http.post("http://34.205.83.36:5011/saveBooking", {
       UID : userId,
       zoneId : zoneId,
       date : bookingDate,
@@ -37,10 +37,10 @@ export class BookgreenzoneService {
   }
 
   public getGZIds(){
-    return this.http.get("http://ec2-54-226-17-170.compute-1.amazonaws.com:5011/getGZIds").toPromise();
+    return this.http.get("http://34.205.83.36:5011/getGZIds").toPromise();
   }
   public getRZIds(){
-    return this.http.get("http://ec2-54-226-17-170.compute-1.amazonaws.com:5011/getRZIds").toPromise();
+    return this.http.get("http://34.205.83.36:5011/getRZIds").toPromise();
   }
 
   public fillCalender(advdays, gz, rz, startTime, endTime,occupancy){
@@ -51,18 +51,18 @@ export class BookgreenzoneService {
     params = params.append('d',startTime);
     params = params.append('e',endTime);
     params = params.append('f',occupancy);
-    return this.http.get("http://ec2-54-226-17-170.compute-1.amazonaws.com:9000/MLBookingSimmulation_api", {params: params}).toPromise();
+    return this.http.get("http://34.205.83.36:9000/MLBookingSimmulation_api", {params: params}).toPromise();
   }
 
   async getNoOfPersonsPerDay(date){
     let params = new HttpParams();
     params = params.append('date',date);
-    return this.http.get("http://ec2-54-226-17-170.compute-1.amazonaws.com:5011/getNoOfPersonsPerDay", {params: params}).toPromise();
+    return this.http.get("http://34.205.83.36:5011/getNoOfPersonsPerDay", {params: params}).toPromise();
   }
   public getNoOfPersonsPerDayAndStartTime(date){
     let params = new HttpParams();
     params = params.append('date',date);
-    return this.http.get("http://ec2-54-226-17-170.compute-1.amazonaws.com:5011/getNoOfPersonsPerDayAndStartTime", {params: params}).toPromise();
+    return this.http.get("http://34.205.83.36:5011/getNoOfPersonsPerDayAndStartTime", {params: params}).toPromise();
   }
 
   

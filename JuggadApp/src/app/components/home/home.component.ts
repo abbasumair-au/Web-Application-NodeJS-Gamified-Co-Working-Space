@@ -79,4 +79,22 @@ export class HomeComponent implements OnInit {
     }
   }
 
+ /* public moveTodayBooking(){
+    this.homeservice.moveTodayBooking(today, tomorrow, sessionStorage.getItem('userId')).then((booking) => {
+      let bookings = booking['currentBooking'].recordsets[0];
+      if(bookings[0]){
+        this.todayStartTime = bookings[0].StartTime;
+        this.todayEndTime = bookings[0].EndTime;
+        this.todayRoom = bookings[0].Zone+" "+bookings[0].RoomNo;
+        this.todayBookingId = bookings[0].BID;
+        this.todayBooking = this.todayStartTime+" to "+this.todayEndTime+" - "+this.todayRoom;
+      }else{
+        this.todayBooking = "No zones booked for today. Go to booking tab for new booking";
+      }
+
+    }).catch((err: any) => {
+      console.log(err);
+    });
+  }*/
+
 }
