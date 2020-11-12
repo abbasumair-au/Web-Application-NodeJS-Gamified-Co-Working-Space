@@ -136,6 +136,12 @@ export class BookgreenzoneComponent implements OnInit {
   }
 
   public daySelected(event){
+    this.showStartTime="";
+    this.showEndTime ="";
+    this.startTime=0;
+    this.endTime=0;
+    this.isFirstGZTime = true;
+    this.isFirstRZTime = true;
     this.hourOccList = [];
     for(let i=0; i<24;i++){
       this.hourOccList.push(null);
